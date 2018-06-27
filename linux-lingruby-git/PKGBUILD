@@ -75,17 +75,17 @@ pkgbase=linux-lingruby-git
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers' 'linux-lingruby-git-docs')
 _major=4.17
 _srcname=linux-stable
-pkgver=4.17.1.0.gd0c077266ecb
+pkgver=4.17.3.0.g83e05c583006
 pkgrel=1
 arch=('x86_64')
-url="https://github.com/Algodev-github/bfq-mq/"
+url="https://github.com/lingruby-pl/linux-lingruby"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git')
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}"
 _bfq_sq_mq_path="bfq-sq-mq"
 _bfq_sq_mq_ver='v8r12'
-_bfq_sq_mq_rel='2K180531'
+_bfq_sq_mq_rel='2K180625'
 _bfq_sq_mq_patch="${_major}-bfq-sq-mq-${_bfq_sq_mq_ver}-${_bfq_sq_mq_rel}.patch"
 _gcc_name="kernel_gcc_patch"
 _gcc_path="git://github.com/graysky2/${_gcc_name}"
@@ -97,7 +97,8 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
         "${_lucjanpath}/pf-miscellaneous/0001-fixes-${_major}-unmask-CHECKPOINT_RESTORE.patch"
         "${_lucjanpath}/${_bfq_sq_mq_path}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
-        "${_lucjanpath}/pf-fixes/0910-fixes-from-pfkernel.patch"
+        "${_lucjanpath}/pf-fixes/0915-fixes-from-pfkernel.patch"
+        "${_lucjanpath}/pf-fixes/0916-fixes-from-pfkernel.patch"
         "${_gcc_path}"
          # the main kernel config files
         'config'
@@ -144,20 +145,19 @@ prepare() {
     
     ### Add fixes from pf-kernel
         msg "Adding fixes from pf-kernel"
-        patch -Np1 -i ../0910-fixes-from-pfkernel.patch
+        for p in "${srcdir}"/091*.patch*; do 
+        msg " $p"
+        patch -Np1 -i "$p"; done
     
     ### Patch source with BFQ-SQ-MQ
-        msg "Patching source with BFQ-SQ-MQ patches"
+        msg "Patching source with BFQ-SQ-MQ"
         patch -Np1 -i ../${_bfq_sq_mq_patch}
     
     ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
-        if [ -n "$_use_tentative_patches" ]; then
-        msg "Apply tentative patches"
-        for p in "${srcdir}"/0100*.patch*; do 
-        msg " $p"
-        patch -Np1 -i "$p"; done
+        if [ -n "$_use_tentative_patch" ]; then
+        msg "Adding tentative patch"
+        patch -Np1 -i ../0100-Check-presence-on-tree-of-every-entity-after-every-a.patch
         fi
-
         
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
@@ -474,11 +474,12 @@ sha512sums=('SKIP'
             '892a0f0fbaa6bc4a632411c5bac2d19ae856d3153deb36fa2c541eef3c8704192bf283bf2af64ea7c394ec1d7957a2f6fdf8cd4400f667bae84bbdbc8aa58731'
             'aea8cd402483417763d7117d7bf1d7833905f9a5b026b7fdaee6d8ebde63ea85ab2373d4f6d29b952ed7d97266f6ae0bc7d8fc8243eaafa0acaba51d11d61b7a'
             '3fff3eaae30e8d5ab64977e3592b2d3994243bcee37157f84a0b9dbbb618239eef65a757801aef52ef123fb495998f8c46a33db5432fb66ddeb3f8801130317e'
-            '83b0a5c04daebfcfcacbd66635e0e7e1f156024b63aea6e46bc63ec4b4c0ba40aec751e775b1fac04b0d631a640709bf57a147739ad9b3581a259d54209f3e1d'
+            '77ebd687dec4025357fc8b192f26a8457bd42e124e9a84e3316f4a39dc5d02657a1a7f518ae652a9b826bc8043cf8dc3182f8c1afc8294cb1cb57b313f238bf5'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
-            '4263ae4b06fe1b5c0632edb4ba5fcc9aaf5ca0594f49ea1d2221362925b891a48fc35edbfbe5159c8011ef14c48e7d8b20be14702de154022657f6f70302040f'
+            '43fdf96b7b834db5ee95fc741916b9addb8e2a74a0320d361b27d1d48d407b7598756d198740814468e1601d1b661046cd96a992240e6fd31ce5e361d2ce71fe'
+            '8e0e67e8466a1bd731735093c83ae252ce76d9a2b893ea6d0070f64e78aea4cff1bf206abae97a359e9d3baf7b9db0a19f6934fcb4de3907cc66445388c4ed0c'
             'SKIP'
-            'd2f64f3461ade7e9feaad26e9b94772f92cbfd6dc47faafc905cca36e132e65a2ae72b6a9e484e4512fe7c71da3d1a16750e627f75c11bee82b7f246ab2b709a'
+            '6f4aa97f3be8a14a60697df1b3edd82e702c5ecce425c0d2c5c07d700163bdc8277228c947edbe8b47e0a5e87bd0a1de882e6ede8726354a8664500c2476425a'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
