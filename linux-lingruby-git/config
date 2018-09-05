@@ -1,10 +1,10 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 4.18.5.ll12  Kernel Configuration
+# Linux/x86 4.18.6.ll13 Kernel Configuration
 #
 
 #
-# Compiler: gcc (GCC) 8.2.1
+# Compiler: gcc (GCC) 8.2.1 20180831
 #
 CONFIG_64BIT=y
 CONFIG_X86_64=y
