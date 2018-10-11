@@ -72,7 +72,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
 _major=4.18
 _srcname=linux
-pkgver=4.18.12.0.g7da07a3216a0.ll24
+pkgver=4.18.13.0.g04a3fbba60ae.ll25
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -82,7 +82,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'graphviz')
 
 _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
-_lucjanrev='ll24'
+_lucjanrev='ll25'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
@@ -254,7 +254,7 @@ prepare() {
 	[[ -z "$_makegconfig" ]] || make gconfig
 
     ### Save configuration for later reuse
-	msg2 "Save configuration for later reuse"
+	msg2 "Save configuration for later reuse..."
 	cat .config > "${startdir}/config.last"
 }
 
@@ -265,7 +265,7 @@ build() {
 }
 
 _package-kernel() {
-  pkgdesc='Linux Kernel and modules with the  BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized.'
+  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset featuring the BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('coreutils' 'linux-firmware' 'mkinitcpio')
   optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
   groups=('linux-lingruby-git')
@@ -322,7 +322,7 @@ _package-kernel() {
 }
 
 _package-headers() {
-  pkgdesc='Header files and scripts to build modules for linux-lingruby-git. Fourth Gen Intel Core i3/i5/i7 optimized.'
+  pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('linux-lingruby-git-kernel')
   groups=('linux-lingruby-git')
 
@@ -406,6 +406,7 @@ _package-headers() {
 
 
 pkgname=("$pkgbase-kernel" "$pkgbase-headers")
+
 for _p in "${pkgname[@]}"; do
   eval "package_$_p() {
     $(declare -f "_package${_p#$pkgbase}")
@@ -414,9 +415,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '9a1f41cfbdbf140de37ec19a82e1b3bca3eb9e14cec88e9f2db59dc12d37ebcc2c409a7c65dc3e4299f8be9539e4bbe4e98543c1c9360e4bbef6230d59c98035'
+            '52b0678a16c72f1b238b8ba36aad8f6632b0b67575777d7ab9d24ace5ca79775b01939aa94123dbab26ebfed33a325dc1649ff653c9412fb59b506e50e9e6d77'
             'SKIP'
-            '220912a08d5732c6df59c4dab39d152a0d99b5a886c92c2db6b6e2652825a065d94c2eb8cec27127ce9ad7995cca339c42de4d124fe349d3d379700cac60f592'
+            'ede3d0c9cb0d79d47f1530995c7bd41bce676e90c82fde0b79c2cf562a0896af4322065c9c200cc2a9502407616a887e4ee3e6803dceecb6e171745d79f27590'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
