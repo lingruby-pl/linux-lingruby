@@ -72,7 +72,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
 _major=4.18
 _srcname=linux
-pkgver=4.18.13.0.g04a3fbba60ae.ll25
+pkgver=4.18.14.0.ge7d199e92956.ll27
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -82,7 +82,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'graphviz')
 
 _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
-_lucjanrev='ll25'
+_lucjanrev='ll27'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
@@ -415,9 +415,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '52b0678a16c72f1b238b8ba36aad8f6632b0b67575777d7ab9d24ace5ca79775b01939aa94123dbab26ebfed33a325dc1649ff653c9412fb59b506e50e9e6d77'
+            '3dcc3f5da30ae99b93cc5a9e7d23c569896ae6af2af48719e133c17130a24fb9f11e5ee04169e99af62ccb74ff41fc365e041ad192f1071c773b1c3bc094ce50'
             'SKIP'
-            'ede3d0c9cb0d79d47f1530995c7bd41bce676e90c82fde0b79c2cf562a0896af4322065c9c200cc2a9502407616a887e4ee3e6803dceecb6e171745d79f27590'
+            '812956ea9ac4b8c0286d08a65f7cc4fc5603a808c022804743fc4e047d2d9fc52b78ff18987f626b37859c76e1551a273b729002ae11e8306c7f5ff289c41766'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
