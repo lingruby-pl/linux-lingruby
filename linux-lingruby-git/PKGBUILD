@@ -59,10 +59,10 @@ _CFQ_disable=y
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
 
-### Enable MQ scheduling 
+### Enable MQ scheduling
 _mq_enable=y
 
-### Running with a 1000 HZ tick rate 
+### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
 ### Do not edit below this line unless you know what you're doing
@@ -70,9 +70,9 @@ _1k_HZ_ticks=y
 pkgbase=linux-lingruby-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
-_major=4.18
+_major=4.19
 _srcname=linux
-pkgver=4.18.16.0.g6b3252287aa2.ll27
+pkgver=4.19.0.g84df9525b0c2.ll1
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -80,10 +80,11 @@ license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'graphviz')
 
-_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
+_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
 _lucjanname='lucjan'
-_lucjanrev='ll27'
-_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+_lucjanrev='ll1'
+_lucjanrc='rc4'
+_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
         "${_lucjanpath}/${_lucjanpatch}"
@@ -98,27 +99,27 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=l
         '99-linux-03-remove.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset')
-        
+
 _kernelname=${pkgbase#linux}
 : ${_kernelname:=-lingruby-git}
-        
+
 pkgver() {
     cd $_srcname
-        
+
     _ver="$(git describe --long --tags | sed 's/^v//;s/-/./g')"
     echo ${_ver}.${_lucjanrev}
-} 
+}
 
 prepare() {
     cd $_srcname
-    
+
     ### Setting version
         msg2 "Setting version..."
         sed -e "/^EXTRAVERSION =/s/=.*/= .${_lucjanrev}/" -i Makefile
         scripts/setlocalversion --save-scmversion
         echo "-$pkgrel" > localversion.10-pkgrel
         echo "$_kernelname" > localversion.20-pkgname
-    
+
     ### Patching sources
         local src
         for src in "${source[@]}"; do
@@ -128,16 +129,16 @@ prepare() {
           msg2 "Applying patch $src..."
           patch -Np1 < "../$src"
         done
-    
-    ### Setting config   
+
+    ### Setting config
         msg2 "Setting config..."
         cp ../config .config
         make olddefconfig
-        
-    ### Prepared version   
+
+    ### Prepared version
         make -s kernelrelease > ../version
         msg2 "Prepared %s version %s" "$pkgbase" "$(<../version)"
-    
+
     ### Optionally use running kernel's config
 	# code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
 	if [ -n "$_use_current" ]; then
@@ -151,15 +152,15 @@ prepare() {
 			warning "Aborting!"
 			exit
 		fi
-	fi    
-        
+	fi
+
     ### Set GCC flags
         if [ -n "$_gcc_haswell" ]; then
                 msg2 "Setting GCC flags for Intel Haswell CPU..."
                 sed -i -e s'/^CONFIG_GENERIC_CPU=y/# CONFIG_GENERIC_CPU is not set/' \
                     -i -e s'/^# CONFIG_MHASWELL is not set/CONFIG_MHASWELL=y/' ./.config
-        fi  
-       
+        fi
+
     ### Set performance governor
         if [ -n "$_per_gov" ]; then
                 msg2 "Setting performance governor..."
@@ -170,36 +171,36 @@ prepare() {
                     -i -e s'/^CONFIG_CPU_FREQ_GOV_CONSERVATIVE=m/# CONFIG_CPU_FREQ_GOV_CONSERVATIVE is not set/' \
                     -i -e s'/^CONFIG_CPU_FREQ_GOV_USERSPACE=m/# CONFIG_CPU_FREQ_GOV_USERSPACE is not set/' \
                     -i -e s'/^CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y/# CONFIG_CPU_FREQ_GOV_SCHEDUTIL is not set/' ./.config
-        fi 
-        
+        fi
+
     ### Disable Deadline I/O scheduler
 	if [ -n "$_deadline_disable" ]; then
 		msg2 "Disabling Deadline I/O scheduler..."
 		sed -i -e s'/^CONFIG_IOSCHED_DEADLINE=y/# CONFIG_IOSCHED_DEADLINE is not set/' \
 		    -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
 	fi
-	
+
     ### Disable CFQ I/O scheduler
 	if [ -n "$_CFQ_disable" ]; then
 		msg2 "Disabling CFQ I/O scheduler..."
 		sed -i -e s'/^CONFIG_IOSCHED_CFQ=y/# CONFIG_IOSCHED_CFQ is not set/' \
-		    -i -e s'/^CONFIG_CFQ_GROUP_IOSCHED=y/# CONFIG_CFQ_GROUP_IOSCHED is not set/' ./.config	
+		    -i -e s'/^CONFIG_CFQ_GROUP_IOSCHED=y/# CONFIG_CFQ_GROUP_IOSCHED is not set/' ./.config
 	fi
-	
+
     ### Disable Kyber I/O scheduler
 	if [ -n "$_kyber_disable" ]; then
 		msg2 "Disabling Kyber I/O scheduler..."
 		sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
 	fi
-	
+
     ### Enable MQ scheduling
 	if [ -n "$_mq_enable" ]; then
 		msg2 "Enable MQ scheduling..."
 		sed -i -e s'/^# CONFIG_SCSI_MQ_DEFAULT is not set/CONFIG_SCSI_MQ_DEFAULT=y/' \
 		    -i -e s'/^# CONFIG_DM_MQ_DEFAULT is not set/CONFIG_DM_MQ_DEFAULT=y/' ./.config
         fi
-    
-    ### Optionally set tickrate to 1000 
+
+    ### Optionally set tickrate to 1000
 	if [ -n "$_1k_HZ_ticks" ]; then
 		msg2 "Setting tick rate to 1k..."
 		sed -i -e 's/^CONFIG_HZ_300=y/# CONFIG_HZ_300 is not set/' \
@@ -238,19 +239,19 @@ prepare() {
 	fi
 
     ### Running make nconfig
-	
+
 	[[ -z "$_makenconfig" ]] ||  make nconfig
-	
+
     ### Running make menuconfig
-	
+
 	[[ -z "$_makemenuconfig" ]] || make menuconfig
-	
+
     ### Running make xconfig
-	
+
 	[[ -z "$_makexconfig" ]] || make xconfig
-	
+
     ### Running make gconfig
-	
+
 	[[ -z "$_makegconfig" ]] || make gconfig
 
     ### Save configuration for later reuse
@@ -315,7 +316,7 @@ _package-kernel() {
   sed "$subst" ../90-linux-02-initcpio.hook | install -Dm644 /dev/stdin \
     "$pkgdir/usr/share/libalpm/hooks/90-${pkgbase}-02-initcpio.hook"
   sed "$subst" ../99-linux-03-remove.hook | install -Dm644 /dev/stdin \
-    "$pkgdir/usr/share/libalpm/hooks/99-${pkgbase}-03-remove.hook"  
+    "$pkgdir/usr/share/libalpm/hooks/99-${pkgbase}-03-remove.hook"
 
   msg2 "Fixing permissions..."
   chmod -Rc u=rwX,go=rX "$pkgdir"
@@ -396,7 +397,7 @@ _package-headers() {
   msg2 "Adding symlink..."
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase-$pkgver"
-  
+
   msg2 "Fixing permissions..."
   chmod -Rc u=rwX,go=rX "$pkgdir"
 }
@@ -412,9 +413,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '3dcc3f5da30ae99b93cc5a9e7d23c569896ae6af2af48719e133c17130a24fb9f11e5ee04169e99af62ccb74ff41fc365e041ad192f1071c773b1c3bc094ce50'
+            'f2518fd278c65787eeb385fea817994bc32f7208b352f3c00f99a783c1145056c6a8d2987040f3b9805ff2451c79c276cfc5bea6b58cfa8a832e7fc49231bd79'
             'SKIP'
-            'f099f411ff2b62a5e152c071aa892be355597a99d35eafdc6d6b8a6a4bc8a142220d72d43badd70bc2214758bd5b1c7bca0d529332bd0845314fcb68af63917e'
+            'be3089cc7e556a21078f22ff04c90e453b36027ed687a817b1f23cde5473935a8a7d3153d54e16a62cf32a8997400d518a8efe857aa481584a8d9aee7484ba8a'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
