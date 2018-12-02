@@ -3,4 +3,3 @@ post_upgrade() {
     echo "WARNING: /boot appears to be a separate partition but is not mounted."
   fi
 }
-
