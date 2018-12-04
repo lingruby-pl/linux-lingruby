@@ -3,3 +3,5 @@ post_upgrade() {
     echo "WARNING: /boot appears to be a separate partition but is not mounted."
   fi
 }
+
+# vim:set ft=sh ts=8 sts=2 sw=2 et:
