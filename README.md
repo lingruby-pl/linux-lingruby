@@ -14,7 +14,7 @@
 ######            Speed: 1696 MHz min/max: 800/1700 MHz Core speeds (MHz): 1: 1696 2: 1696 3: 1696 4: 1696
 
 ***
-###### [linux-lucjan](https://github.com/sirlucjan/linux-lucjan) patchset [actual](https://github.com/sirlucjan/linux-lucjan/tree/master/actual) and [testing](https://github.com/sirlucjan/linux-lucjan/tree/master/testing)
+###### [linux-lucjan](https://github.com/sirlucjan/linux-lucjan) patchset [actual](https://github.com/sirlucjan/linux-lucjan/tree/master/actual) 
 
 
 * [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) - latest fixes authored by Paolo Valente and BFQ Team
