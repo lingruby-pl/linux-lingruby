@@ -73,16 +73,16 @@ _net_udp_tunnel=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=actual
+_linux_lucjan=testing
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lingruby-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
-_major=4.19
+_major=4.20
 _srcname=linux
-pkgver=4.19.12.r0.g2a7cb228d29c.ll19
+pkgver=4.20.r0.g8fe28cb58bcb.ll1
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -95,7 +95,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll19'
+ _lucjanrev='ll1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -103,8 +103,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll17'
- _lucjanrc='rc1'
+ _lucjanrev='ll1'
+ _lucjanrc='rc2'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -444,7 +444,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '622295d96901af387052813878c4f06a327477b5f847512458232095a4ff96d102ff5c8fab5d63a4b32277322ccd003b913a923679a7234f227e3be4ea6c70b7'
+            'bdf87b95226d33a78b32c62dc58404b9838b1ac60aaf2f418219a66ff1a0978e81e091198a777d55eb9988409158a3dd1c5e1c6ad38aa7dbdc1c80278c73f01f'
             'SKIP'
             'a2b8babdebcbf897d1146ce81a495ccd2125c0efa1a18cba063e89ee99d5fa2f61b29117ddbf7c0bf69e09937d3f4748a1bba86b951d6b5ae1acff6176d23af8'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
