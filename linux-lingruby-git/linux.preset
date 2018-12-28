@@ -12,3 +12,4 @@ default_image="/boot/initramfs-%PKGBASE%.img"
 #fallback_config="/etc/mkinitcpio.conf"
 fallback_image="/boot/initramfs-%PKGBASE%-fallback.img"
 fallback_options="-S autodetect"
+
