@@ -10,4 +10,3 @@ Target = usr/lib/initcpio/*
 Description = Updating %PKGBASE% initcpios...
 When = PostTransaction
 Exec = /usr/bin/mkinitcpio -p %PKGBASE%
-
