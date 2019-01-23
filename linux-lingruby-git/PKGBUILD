@@ -82,7 +82,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
 _major=4.20
 _srcname=linux
-pkgver=4.20.3.r0.ge9a713f77bb2.ll13
+pkgver=4.20.4.r0.g3d4332cd8258.ll18
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -95,7 +95,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll18'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -103,7 +103,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll1'
+ _lucjanrev='ll14'
  _lucjanrc='rc2'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -444,9 +444,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '034cf4a5b9af66c332c1b5e3e7ad7671f5bb7eb82345b550a04eb65ab228210fcc5cb23c72260abeae520c12c952aaaf9030e70c99b0d0ad718605addc9aca06'
+            'a11bf48d9ad1dd021872e80b59a76320bd0036c54582f069b146e8e67688af1cb4b518f7c9106d10d19f8b695f755213c26625892fa569cd90055ac3caed603c'
             'SKIP'
-            '44ea236a375ba75a33084176294709868755c85407e6757f2d984ecc4b8ba772535fabadeda1038feadc5939e05b17ee7411b42d111bb5a342102c768d059d73'
+            'bf68f6082e37be494c589b8e1ea595a2490fa387fda93a2e1f3044977c3bd62998abb8b021645fc3118b5253984bad1d0d4e2cbb66edf203451236898970d789'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
