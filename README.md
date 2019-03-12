@@ -19,10 +19,6 @@
 
 * [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) - latest fixes authored by Paolo Valente and BFQ Team
  
-* [BFQ-SQ and BFQ-MQ Scheduler](https://github.com/Algodev-github/bfq-mq) - bfq-sq and bfq-mq from Algodev-github
-
-* [bfq-mq improvements](https://github.com/Dragon-Team) - latest fixes authored by Andy Lavr and Dragon Team
-
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 8.1
 
 * [UKSM (sources)](https://github.com/dolohow/uksm) / [UKSM (info)](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
@@ -33,7 +29,7 @@
 
 * [random fixes from pfkernel](https://github.com/pfactum/pf-kernel) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
 
-* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/4.20/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/4.20/ll-patches) - specific patches authored by Piotr Gorski
+* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.0/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.0/ll-patches) - specific patches authored by Piotr Gorski
 
 
 ***
