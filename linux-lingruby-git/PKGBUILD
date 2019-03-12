@@ -31,9 +31,8 @@ _per_gov=y
 _NUMAdisable=y
 
 # Compile ONLY probed modules
-# As of mainline 2.6.32, running with this option will only build the modules
-# that you currently have probed in your system VASTLY reducing the number of
-# modules built and the build time to do it.
+# Build in only the modules that you currently have probed in your system VASTLY
+# reducing the number of modules built and the build time.
 #
 # WARNING - ALL modules must be probed BEFORE you begin making the pkg!
 #
@@ -54,14 +53,8 @@ _use_current=
 ### Disable Deadline I/O scheduler
 _deadline_disable=y
 
-### Disable CFQ I/O scheduler
-_CFQ_disable=y
-
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
-
-### Disable MQ scheduling
-_mq_disable=
 
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
@@ -80,9 +73,9 @@ _linux_lucjan=actual
 pkgbase=linux-lingruby-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
-_major=4.20
+_major=5.0
 _srcname=linux
-pkgver=4.20.12.r0.gc91951f15978.ll34
+pkgver=5.0.1.r0.g283506fcd65d.ll3
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -95,7 +88,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll34'
+ _lucjanrev='ll3'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -103,8 +96,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll34'
- _lucjanrc='rc1'
+ _lucjanrev='ll1'
+ _lucjanrc='rc7'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -128,7 +121,7 @@ _kernelname=${pkgbase#linux}
 pkgver() {
     cd $_srcname
 
-    _ver="$(git describe --long --tags | sed -E 's/^v//;s/([^-]*-g)/r\1/;s/-/./g;s/\.rc/rc/')"
+    _ver="$(git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')"
     printf ${_ver}.${_lucjanrev}
 }
 
@@ -138,6 +131,7 @@ prepare() {
     ### Setting version
         msg2 "Setting version..."
         sed -e "/^EXTRAVERSION =/s/=.*/=/" -i Makefile
+        touch .scmversion
         scripts/setlocalversion --save-scmversion
         echo "-$pkgrel" > localversion.10-pkgrel
         echo "$_kernelname" > localversion.20-pkgname
@@ -193,29 +187,14 @@ prepare() {
     ### Disable Deadline I/O scheduler
 	if [ -n "$_deadline_disable" ]; then
 		msg2 "Disabling Deadline I/O scheduler..."
-		sed -i -e s'/^CONFIG_IOSCHED_DEADLINE=y/# CONFIG_IOSCHED_DEADLINE is not set/' \
-		    -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
+		sed -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
 	fi
-
-    ### Disable CFQ I/O scheduler
-	if [ -n "$_CFQ_disable" ]; then
-		msg2 "Disabling CFQ I/O scheduler..."
-		sed -i -e s'/^CONFIG_IOSCHED_CFQ=y/# CONFIG_IOSCHED_CFQ is not set/' \
-		    -i -e s'/^CONFIG_CFQ_GROUP_IOSCHED=y/# CONFIG_CFQ_GROUP_IOSCHED is not set/' ./.config
-	fi
-
+	
     ### Disable Kyber I/O scheduler
 	if [ -n "$_kyber_disable" ]; then
 		msg2 "Disabling Kyber I/O scheduler..."
 		sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
 	fi
-
-    ### Disable MQ scheduling
-	if [ -n "$_mq_disable" ]; then
-		msg2 "Disabling MQ scheduling..."
-		sed -i -e s'/^CONFIG_SCSI_MQ_DEFAULT=y/# CONFIG_SCSI_MQ_DEFAULT is not set/' \
-		    -i -e s'/^CONFIG_DM_MQ_DEFAULT=y/# CONFIG_DM_MQ_DEFAULT is not set/' ./.config
-        fi
 
     ### Optionally set tickrate to 1000
 	if [ -n "$_1k_HZ_ticks" ]; then
@@ -297,7 +276,7 @@ build() {
 }
 
 _package-kernel() {
-  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset featuring the BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized."
+  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset featuring the BFQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('coreutils' 'linux-firmware' 'mkinitcpio')
   optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
   groups=('linux-lingruby-git')
@@ -444,9 +423,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '712e7a393d33073be66c3794978639017f5f76d7013d1d3e74e026e9704f8e36c299fddfebb60088af9b555012bec6e3cd911bd813bed371651afd8991b2da87'
+            '31cb71ad7eb62d76e51d331bfa3e9e4847cca6a2a917e9f52ef4a7bae024b02e4a481cf5b09e9e20a824e0434f11d5f512cee1c98fc309e7ffb9719f49af91df'
             'SKIP'
-            'e75a7112321e7b389c14f4edbd65be2601ef584872cc8b0614514573c273b29af8232a84d7f971232cee943492f6933b1dcd703eb3b6c98614a77083eb7ad7bf'
+            'b17d1fdf1e45938f5b1e5261a20e7fe9e1ff946c8abed43c14c2b1f0b8f9e1cc03f3ca0c62a1b8f0a625ed3a0ca6b95630b0c24dfc48029588e5dde78c947e6a'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
