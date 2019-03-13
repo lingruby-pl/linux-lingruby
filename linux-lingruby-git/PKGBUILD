@@ -75,7 +75,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
 _major=5.0
 _srcname=linux
-pkgver=5.0.1.r0.g283506fcd65d.ll3
+pkgver=5.0.1.r0.g283506fcd65d.ll5
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -88,7 +88,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll3'
+ _lucjanrev='ll5'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -189,7 +189,7 @@ prepare() {
 		msg2 "Disabling Deadline I/O scheduler..."
 		sed -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
 	fi
-	
+
     ### Disable Kyber I/O scheduler
 	if [ -n "$_kyber_disable" ]; then
 		msg2 "Disabling Kyber I/O scheduler..."
@@ -423,9 +423,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '31cb71ad7eb62d76e51d331bfa3e9e4847cca6a2a917e9f52ef4a7bae024b02e4a481cf5b09e9e20a824e0434f11d5f512cee1c98fc309e7ffb9719f49af91df'
+            'dcb63c4b84433c1cdcf8c990fc6435832a3fb995aa79af15cd53d1cb863f30a20df5a0660f83a5633088e30c6df61402b54f717c34cb90ca1c5defc5fd3be8d4'
             'SKIP'
-            'b17d1fdf1e45938f5b1e5261a20e7fe9e1ff946c8abed43c14c2b1f0b8f9e1cc03f3ca0c62a1b8f0a625ed3a0ca6b95630b0c24dfc48029588e5dde78c947e6a'
+            'e621e6d1aceff7b57da111f930e996e43fa8fbb4abdcc12e441be84acf900c1cb4892773f5c1bff8e958e66ee486b70bd6fe3dd9a9737d6377b032e178229219'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
