@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.0.4.ll15 Kernel Configuration
+# Linux/x86 5.0.5.ll19 Kernel Configuration
 #
 
 #
@@ -17,7 +17,8 @@ CONFIG_THREAD_INFO_IN_TASK=y
 #
 # General setup
 #
-CONFIG_SCHED_PDS=y
+CONFIG_SCHED_BMQ=y
+CONFIG_SCHED_TIMESLICE=4
 CONFIG_INIT_ENV_ARG_LIMIT=32
 # CONFIG_COMPILE_TEST is not set
 CONFIG_LOCALVERSION=""
