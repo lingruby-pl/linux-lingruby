@@ -14,14 +14,14 @@
 ######            Speed: 1696 MHz min/max: 800/1700 MHz Core speeds (MHz): 1: 1696 2: 1696 3: 1696 4: 1696
 
 ***
-###### [linux-lucjan](https://github.com/sirlucjan/linux-lucjan) patchset [actual](https://github.com/sirlucjan/linux-lucjan/tree/master/actual) 
+###### [linux-lucjan](https://github.com/sirlucjan/linux-lucjan) patchset [actual](https://github.com/sirlucjan/linux-lucjan/tree/master/actual) and [testing](https://github.com/sirlucjan/linux-lucjan/tree/master/testing)
 
 
 * [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) - latest fixes authored by Paolo Valente and BFQ Team
  
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 8.1
 
-* [UKSM (sources)](https://github.com/dolohow/uksm) / [UKSM (info)](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
+* [UKSM (sources)](https://github.com/dolohow/uksm) / [UKSM (sources)](https://github.com/zaza42/uksm) / [UKSM (info)](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s / zaza42's github
 
 * [BMQ](https://gitlab.com/alfredchen/bmq) / [BMQ blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
