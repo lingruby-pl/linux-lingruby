@@ -66,16 +66,18 @@ _net_udp_tunnel=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=actual
+# 'trunk' - pre-rc releases (active only temporarily)
+_linux_lucjan=trunk
+
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lingruby-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
-_major=5.0
+_major=5.1
 _srcname=linux
-pkgver=5.0.14.r0.g274ede3e1a5f.ll34
+pkgver=5.1.1.r0.gb724e9356404.ll1
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -100,6 +102,15 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanrc='rc2'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
+elif [ "$_linux_lucjan" = "trunk" ]; then
+
+_lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
+# _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
+_lucjanname='lucjan'
+_lucjanrev='ll1'
+_lucjanrc='rc5'
+_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+
 fi
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
@@ -121,7 +132,7 @@ _kernelname=${pkgbase#linux}
 pkgver() {
     cd $_srcname
 
-    _ver="$(git describe --long --tags | sed -E 's/^v//;s/([^-]*-g)/r\1/;s/-/./g;s/\.rc/rc/')"
+    _ver="$(git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')"
     printf ${_ver}.${_lucjanrev}
 }
 
@@ -423,9 +434,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'abf74fef5c342b973fe1f276f0b8a8c41af687b155ee37d21feed89c8e3d8fa7df41073dc8fbd423fc649e6e43e5514386e69d440d4e37c73a78baa304c22ccb'
+            'e3877e7da5c208f19030e5cd552caff50e8c419794e586fb0de26a9bf9c7a46dff4b7c035641a47a4c7e77e6f5c7e9213e1d6c26f5a6025f378a5f07b1bba88c'
             'SKIP'
-            '034a62793e3fadb109c47735b5c843eb451009c0c7519fc00e4544f31d2411d65abdd590de09655ba343069537733cb1245377e54217c186602c7468aab88bc8'
+            '84440b3ed28a5025886b661d9a39ac738b0c6e8ee5d7d54c2e1ff8a56870da4df46f54d8c77f48764ff37a5aedf4fd13aa4c5e6526726dcb0b0731922ee16ffd'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
