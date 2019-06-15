@@ -69,7 +69,6 @@ _net_udp_tunnel=y
 # 'trunk' - pre-rc releases (active only temporarily)
 _linux_lucjan=testing
 
-
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lingruby-git
