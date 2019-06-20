@@ -1,10 +1,10 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.1.11.ll10 Kernel Configuration
+# Linux/x86 5.1.12.ll13 Kernel Configuration
 #
 
 #
-# Compiler: gcc (GCC) 8.3.0
+# Compiler: gcc (GCC) 9.1.0
 #
 CONFIG_CC_IS_GCC=y
 CONFIG_GCC_VERSION=80300
@@ -6066,6 +6066,7 @@ CONFIG_CHASH=m
 # CONFIG_CHASH_STATS is not set
 # CONFIG_CHASH_SELFTEST is not set
 CONFIG_DRM_NOUVEAU=m
+CONFIG_NOUVEAU_LEGACY_CTX_SUPPORT=y
 CONFIG_NOUVEAU_DEBUG=5
 CONFIG_NOUVEAU_DEBUG_DEFAULT=3
 # CONFIG_NOUVEAU_DEBUG_MMU is not set
