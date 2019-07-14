@@ -68,7 +68,7 @@ _wireguard=y
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -77,7 +77,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
 _major=5.2
 _srcname=linux
-pkgver=5.2.r0.g0ecfebd2b524.ll1
+pkgver=5.2.1.r0.g527a3db363a3.ll2
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -98,7 +98,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll11'
+ _lucjanrev='ll2'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -438,7 +438,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'a1eb7e7fd376287740296cbd87a3edeea3fefe84e354abd4ddbd1479581a3201f3b333426ba06accd8d1c354fdf9e4338f71688cb607231aa2080ebc62a6915e'
+            'b2375922545f275ffee282e65dbdde977994bd1c2be4144cccc246dfdeda2bbfb44b8d2d507616964f737c8759620734cb8d26662da8788112723740e76259e3'
             'SKIP'
             'f7eeeb09e5bfb20c80553103fc69c2e34532373eed10ac17ae97029053866b9061ca0fcd407030bb8ca6353815b2566e47dcd78394dd5357e97dc03b744adacd'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
