@@ -19,6 +19,8 @@
 
 * [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) - latest fixes authored by Paolo Valente and BFQ Team
  
+* [bfq-dev](https://github.com/Algodev-github/bfq-mq/commits/dev-bfq-on-5.2) - latest fixes authored by Paolo Valente and BFQ Team
+ 
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 8.1
 
 * [BMQ](https://gitlab.com/alfredchen/bmq) / [BMQ blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
@@ -32,7 +34,6 @@
 * [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.1/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.1/ll-patches) - specific patches authored by Piotr Gorski
 
 * [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.1/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.1/ll-branding) - specific patches authored by Piotr Gorski
-
 
 
 ***
