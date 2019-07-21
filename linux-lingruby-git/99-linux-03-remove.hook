@@ -2,7 +2,7 @@
 Type = File
 Operation = Remove
 Target = boot/vmlinuz-%PKGBASE%
-
+ 
 [Action]
 Description = Remove %PKGBASE% initramfs files...
 When = PreTransaction
