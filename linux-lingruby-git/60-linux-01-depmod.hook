@@ -5,7 +5,7 @@ Operation = Upgrade
 Operation = Remove
 Target = usr/lib/modules/%KERNVER%/*
 Target = usr/lib/modules/%EXTRAMODULES%/*
- 
+
 [Action]
 Description = Updating %PKGBASE% module dependencies...
 When = PostTransaction

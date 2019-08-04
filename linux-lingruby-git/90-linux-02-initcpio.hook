@@ -5,7 +5,7 @@ Operation = Upgrade
 Target = boot/vmlinuz-%PKGBASE%
 Target = usr/lib/modules/%KERNVER%/vmlinuz
 Target = usr/lib/initcpio/*
- 
+
 [Action]
 Description = Updating %PKGBASE% initcpios...
 When = PostTransaction
