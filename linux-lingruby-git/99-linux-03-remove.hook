@@ -1,4 +1,4 @@
-[Trigger]
+[Trigger] 
 Type = File
 Operation = Remove
 Target = boot/vmlinuz-%PKGBASE%
