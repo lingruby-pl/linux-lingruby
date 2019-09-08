@@ -67,14 +67,14 @@ _wireguard=y
 # ATTENTION - one of two predefined values should be selected!
 # 'stable' - stable releases (recommended)
 # 'unstable' - rc releases (active only temporarily)
-_bfq_rev='unstable'
+_bfq_rev='stable'
 
 ### Download linux-lucjan patchset
 # ATTENTION - one of four predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='testing'
+_linux_lucjan='actual'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -83,7 +83,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
 _major=5.2
 _srcname=linux
-pkgver=5.2.11.r0.gc3915fe1bf12.ll32
+pkgver=5.2.13.r0.g218ca2e5affe.ll35
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -129,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll31'
+ _lucjanrev='ll35'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -137,7 +137,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll32'
+ _lucjanrev='ll34'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -153,7 +153,9 @@ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 fi
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
+         # bfq-reverts
         "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+         # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
@@ -479,9 +481,9 @@ done
 sha512sums=('SKIP'
             'b472715df2a0ebb507d0642d195464f4623e440577aa72c05651e4b4ce679c4b3f1ac2656dc3c9d0faf253f12285d709839c9f27bfb0f92c73a84cfeafac7964'
             'SKIP'
-            '2dbeff3b7171b7108ebc046c4d2de29c7ccc7371260189cc134d29d5fd496ed04f56ad0265fd46841eb4bdcc5992f37a3703a1a522aa77c885e531f9b076a1aa'
+            '87f5e0be5c9a5788e528789373d17233742fc4d72fa3225d75767476455edb58ec8802a9f3f05d814dbe0d6b250cb29d4a3cf4353b39237b14300cdc38470857'
             'SKIP'
-            '20edf611b5dc3e0b13dabf0098a7c0868f7b4f5a5bc6d657e661b336772141a8af016db586003d5053165f6c0b885c573d3fefd6ebb527f3bb786fcbf20d925d'
+            'fa8ace0cd86689a2873b3eada88561e206cfecc3794387fe6a9fcf3d3190e462787215b730a048f245e05baacf8795c3a2015a190bdbb6db8835af2fe6d287a3'
             '709b0fe0ad4a1c03ea611c21db94720f1876ba4cdbacd7c5cf0437c898539d8a0b54b53a6047a9e8adb23dbe301d0e2520b842ff7e80e80f8ee1e042b8951709'
             '2b2fc91ebdf2cd72f4230ad4940b0d2e2ecef8f591671c2fdcbbc7c4ccca264ec83ddf063e4d943bfc0ad5c0014fd079d384626751876ae9e559b10a1c36e043'
             'f7a6f8cd304db69936fea22d1c92648e279b29e693838694361f1a38a8bcd3c68487102e80f31a5e81ec63338096baf2aaf673c5f163e088f963410bb8c4957f'
