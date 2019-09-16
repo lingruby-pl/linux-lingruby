@@ -18,7 +18,7 @@
 
 
 * [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) - latest fixes authored by Paolo Valente and BFQ Team
- 
+
 * [bfq-dev](https://github.com/Algodev-github/bfq-mq/commits/dev-bfq-on-5.2) - latest fixes authored by Paolo Valente and BFQ Team
 
 * [bfq-lucjan-dev](https://github.com/sirlucjan/bfq-mq-lucjan/commits/dev-bfq-on-5.2-lucjan) - latest fixes authored by Paolo Valente and BFQ Team and forked by Piotr Gorski
@@ -33,6 +33,10 @@
 
 * [fixes from ClearLinux](https://github.com/clearlinux-pkgs/linux) - specific patches authored by ClearLinux Team
 
+* [AUFS](https://github.com/sfjro/aufs5-standalone) / [AUFS](http://aufs.sourceforge.net) - advanced multi-layered unification filesystem
+
+* [WireGuard](https://git.zx2c4.com/WireGuard) - fast and secure kernelspace VPN
+
 * [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.1/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.1/ll-patches) - specific patches authored by Piotr Gorski
 
 * [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.1/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.1/ll-branding) - specific patches authored by Piotr Gorski
@@ -44,6 +48,7 @@
 ###### To use lucjan-kernels smoothly apply bfq-reverts before linux-lucjan patch. Otherwise the kernel will not compile.
 
 * [bfq-reverts](https://github.com/sirlucjan/kernel-patches/tree/master/5.2/bfq-reverts) / [bfq-reverts](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.2/bfq-reverts) - specific patches authored by Piotr Gorski
+
 
 
 ***
