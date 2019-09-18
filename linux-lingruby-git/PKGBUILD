@@ -74,16 +74,16 @@ _bfq_rev='stable'
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='testing'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lingruby-git+
 _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
-_major=5.2
+_major=5.3
 _srcname=linux
-pkgver=5.2.15.r0.g6e282ba6ff6b.ll42
+pkgver=5.3.r0.g4d856f72c10e.ll1
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -126,16 +126,16 @@ fi
 
 if [ "$_linux_lucjan" = "actual" ]; then
 
- _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
-# _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
+ _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll41'
+ _lucjanrev='ll42'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
 
- _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
-# _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
+ _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
  _lucjanrev='ll42'
  _lucjanrc='rc1'
@@ -143,18 +143,19 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 
 elif [ "$_linux_lucjan" = "trunk" ]; then
 
-_lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
-# _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
-_lucjanname='lucjan'
-_lucjanrev='ll1'
-_lucjanrc='rc3'
-_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
+ _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
+ _lucjanname='lucjan'
+ _lucjanrev='ll1'
+ _lucjanrc='rc3'
+ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
 
-source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
+source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git"
+         #"git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
          # bfq-reverts
-        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+         #"${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
@@ -479,15 +480,13 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'b472715df2a0ebb507d0642d195464f4623e440577aa72c05651e4b4ce679c4b3f1ac2656dc3c9d0faf253f12285d709839c9f27bfb0f92c73a84cfeafac7964'
+            '688155ec86f02ff0d3bb787227971dcd6411581f6c8e07460bc90acb230f8787866df230fc23322b68e3859403bfb80222e340640baffe18403831e968811b64'
             'SKIP'
-            '7b6e648e2fe893600143fb45c5d07a99f7ba03437b7b39ec2f7c8e2c12bedb4f53ddaf4c760d6d826825fa013568e2a598bb54a01ce4535025d47cff2b7ab418'
-            'SKIP'
-            '61d0add3d795198e2cb132406c61f072052ab5ff2343c2d4e0bc9ba9c3893c62ab20ca38c34969bcff6ac8abd92822fcc3fb68c155e1b06a30fc5a79f51e7580'
-            '709b0fe0ad4a1c03ea611c21db94720f1876ba4cdbacd7c5cf0437c898539d8a0b54b53a6047a9e8adb23dbe301d0e2520b842ff7e80e80f8ee1e042b8951709'
-            '2b2fc91ebdf2cd72f4230ad4940b0d2e2ecef8f591671c2fdcbbc7c4ccca264ec83ddf063e4d943bfc0ad5c0014fd079d384626751876ae9e559b10a1c36e043'
-            'f7a6f8cd304db69936fea22d1c92648e279b29e693838694361f1a38a8bcd3c68487102e80f31a5e81ec63338096baf2aaf673c5f163e088f963410bb8c4957f'
-            '18a84b02300fa4030b1728f9903620aef613b746b279135cf4890c004108e4a1e6a473970361ca6a84e7bd835c2b8b244671d6670c6f2156878d1c81a08b11ea')
+            'fd0d295ec3482a4e188c78b0fc1984e4ae85d92141c318a17507c993dfc22d965f26c06d010bbe3a9e63d89a6d12df9d34474bba55427fa57c0c7d3d04cfc003'
+            '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
+            '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
+            '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
+            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski

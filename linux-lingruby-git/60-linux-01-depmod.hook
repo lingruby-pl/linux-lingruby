@@ -1,4 +1,4 @@
-[Trigger] 
+[Trigger]
 Type = File
 Operation = Install
 Operation = Upgrade
