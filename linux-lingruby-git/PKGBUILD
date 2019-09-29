@@ -83,7 +83,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
 _major=5.3
 _srcname=linux
-pkgver=5.3.1.r0.gc9a59a82366b.ll1
+pkgver=5.3.1.r0.gc9a59a82366b.ll10
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
@@ -129,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll1'
+ _lucjanrev='ll10'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -479,9 +479,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '688155ec86f02ff0d3bb787227971dcd6411581f6c8e07460bc90acb230f8787866df230fc23322b68e3859403bfb80222e340640baffe18403831e968811b64'
+            'a89949a90926456dad408b4eb3fd7b54df6f069eb9fb3b1452ad36c3042cf869fe73e75d94e7536bc7ce1a945ab81613b85d659dcd3261997bed39f81d1ad759'
             'SKIP'
-            'd9e79d3c2581b81b3020b73443ce24e16c7a6f73cad6a8d4b3937737310381eb5f4a02d3b7ddbf8cdbc8a2c241e1f2e83f4d72e81e7a6495ec445c0b09ff6621'
+            'e989d3a8617f0fe55e8e5f5f54bf580905962c4efccc9948a9c55c371eda3476cf1d00fc4c9463e8da8f7b6b0b694ff196fb2e1f9449e0688d926e16a7919667'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
