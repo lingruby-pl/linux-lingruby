@@ -1,10 +1,10 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.3.2.ll13 Kernel Configuration
+# Linux/x86 5.3.4.ll16 Kernel Configuration
 #
 
 #
-# Compiler: gcc (GCC) 9.1.0
+# Compiler: gcc (GCC) 9.2.0
 #
 CONFIG_CC_IS_GCC=y
 CONFIG_GCC_VERSION=90100
