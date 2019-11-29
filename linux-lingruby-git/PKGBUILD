@@ -78,9 +78,9 @@ _linux_lucjan='actual'
 pkgbase=linux-lingruby-git+
 _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
-_major=5.3
+_major=5.4
 _srcname=linux
-pkgver=5.3.13.r0.g42adce418073.ll42
+pkgver=5.4.r0.g219d54332a09.ll1
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -101,7 +101,7 @@ if [ "$_bfq_rev" = "stable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/stable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver2'
+ _bfqrevver='ver1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}.patch"
 
 elif [ "$_bfq_rev" = "unstable" ]; then
@@ -109,7 +109,7 @@ elif [ "$_bfq_rev" = "unstable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/unstable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver2'
+ _bfqrevver='ver1'
  _bfqrevrc='rc1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
@@ -127,7 +127,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll42'
+ _lucjanrev='ll1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -135,7 +135,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll31'
+ _lucjanrev='ll1'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -144,19 +144,19 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll21'
- _lucjanrc='rc0'
+ _lucjanrev='ll1'
+ _lucjanrc='rc3'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
          # bfq-reverts
-        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+         # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
-        "${_lucjanpath}/${_lucjanpatch}"{,.sig}
+         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
-        'config')
+         'config')
 
 export KBUILD_BUILD_HOST=arch-bspwm
 export KBUILD_BUILD_USER=$pkgbase
@@ -438,11 +438,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'affcda7905b562ac2c5f4933ff8d312c62a3f9f1c730175217239e788921127faa9b4480c85bca0e4a079c84644a13c33034d7ec021c90c8d56708730d92abb5'
+            '18f790535f1a2627b9c879d11f0eeb41b4761ebda250ec4fe63af4ddfb252d2ea17bc2f6fee0accc121ee1c8edf3769afd5272b27694256837411e2dd8373936'
             'SKIP'
-            '51fdd4dfd87712f4913ba4c35602fe5472dbd2d5767b70eb643d02ace7528780d336a8002f62d8d0f17c3d76b829006b966fb2144854fb3279e7bbab8ec7eccd'
-            'SKIP'
-            'bf37bea9cf2a9d6139b54306f0b26c826c8eab679ebe2049d5a6b9a415d0ae1226ab895db668240cf71dcc4bca8082a8cf0feff2ca4267ede408235e103170af')
+            'd48ef6caf8b6cc97f17f5773c44bfcfd44e2fd41f1511d0dd760a44bee426537ca867eaf821227ccd8bf9a95d0a468a033bf0ad9adac2695dc171d5a948c78d7')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
