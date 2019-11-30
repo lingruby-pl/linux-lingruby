@@ -77,18 +77,17 @@ _linux_lucjan='actual'
 
 pkgbase=linux-lingruby-git+
 _pkgbase=linux-lucjan
-# pkgname=('linux-lingruby-git-kernel' 'linux-lingruby-git-headers')
+# pkgname=('linux-lingruby-git+-kernel' 'linux-lingruby-git+-headers')
 _major=5.4
 _srcname=linux
-pkgver=5.4.r0.g219d54332a09.ll1
+pkgver=5.4.1.r0.g79438f37a69a.ll2
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
 license=('GPL2')
 options=('!strip')
-makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme'
-             'graphviz' 'imagemagick')
+makedepends=('bc' 'kmod' 'libelf' 'git')
 
 ### BFQ reverts
 # Some patches for BFQ conflict with patches for BFQ-dev.
@@ -127,7 +126,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll1'
+ _lucjanrev='ll2'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -150,13 +149,13 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 
 fi
 
-source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
+source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/${_srcname}.git#branch=linux-${_major}.y"
          # bfq-reverts
          # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
-         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
+        "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
-         'config')
+        'config')
 
 export KBUILD_BUILD_HOST=arch-bspwm
 export KBUILD_BUILD_USER=$pkgbase
@@ -354,7 +353,7 @@ _package-kernel() {
 
 _package-headers() {
   pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('linux-lingruby-git-kernel')
+  depends=('linux-lingruby-git+-kernel')
   groups=('linux-lingruby-git+')
 
   cd $_srcname
@@ -438,9 +437,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '18f790535f1a2627b9c879d11f0eeb41b4761ebda250ec4fe63af4ddfb252d2ea17bc2f6fee0accc121ee1c8edf3769afd5272b27694256837411e2dd8373936'
+            'cb17da6d0c6e148359e2a9d75f45f341065f197e4e23fb7e4459d9fbae5e1b2d9e35cc3642a08b4fc14d2e6432dca52c55cbd47b02cc85641941834801d8c540'
             'SKIP'
-            'd48ef6caf8b6cc97f17f5773c44bfcfd44e2fd41f1511d0dd760a44bee426537ca867eaf821227ccd8bf9a95d0a468a033bf0ad9adac2695dc171d5a948c78d7')
+            '12445a113aec230e9b73040178cd04d2064c851734d1be5bfe8931502b9d703ed6f4c3a5252738a92b76020ae34836069b6ad2d66d4ef0d62c2a57c330767603')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
