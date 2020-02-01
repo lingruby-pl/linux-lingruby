@@ -19,12 +19,6 @@ _makexconfig=
 ### Tweak kernel options prior to a build via gconfig
 _makegconfig=
 
-### Setting GCC Flags for CONFIG_MHASWELL
-_gcc_haswell=y
-
-### Set performance governor as default
-_per_gov=y
-
 # NUMA is optimized for multi-socket motherboards.
 # A single multi-core CPU actually runs slower with NUMA enabled.
 # See, https://bugs.archlinux.org/task/31187
@@ -47,11 +41,20 @@ _localmodcfg=
 # a new kernel is released, but again, convenient for package bumps.
 _use_current=
 
+### Setting GCC Flags for CONFIG_MHASWELL
+_gcc_haswell=y
+
+### Set performance governor as default
+_per_gov=y
+
 ### Disable Deadline I/O scheduler
 _deadline_disable=y
 
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
+
+### Enable KBUILD_CFLAGS -O3
+_cc_harder=y
 
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
@@ -71,7 +74,7 @@ _bfq_rev='stable'
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='trunk'
+_linux_lucjan='actual'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -80,14 +83,15 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby-git+-kernel' 'linux-lingruby-git+-headers')
 _major=5.5
 _srcname=linux
-pkgver=5.5.r0.gd5226fa6dbae.ll1
+pkgver=5.5.1.r0.g70c707aae3e5.ll3
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
 license=('GPL2')
 options=('!strip')
-makedepends=('bc' 'kmod' 'libelf' 'git')
+makedepends=('kmod' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme'
+             'graphviz' 'imagemagick')
 
 ### BFQ reverts
 # Some patches for BFQ conflict with patches for BFQ-dev.
@@ -126,7 +130,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll1'
+ _lucjanrev='ll3'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -172,7 +176,7 @@ prepare() {
     cd $_srcname
 
     ### Setting version
-        msg2 "Setting version..."
+        echo "Setting version..."
         sed -e "/^EXTRAVERSION =/s/=.*/=/" -i Makefile
         touch .scmversion
         scripts/setlocalversion --save-scmversion
@@ -185,19 +189,19 @@ prepare() {
           src="${src%%::*}"
           src="${src##*/}"
           [[ $src = *.patch ]] || continue
-          msg2 "Applying patch $src..."
+          echo "Applying patch $src..."
           patch -Np1 < "../$src"
         done
 
     ### Setting config
-        msg2 "Setting config..."
+        echo "Setting config..."
         cp ../config .config
 
     ### Optionally use running kernel's config
 	# code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
 	if [ -n "$_use_current" ]; then
 		if [[ -s /proc/config.gz ]]; then
-			msg2 "Extracting config from /proc/config.gz..."
+			echo "Extracting config from /proc/config.gz..."
 			# modprobe configs
 			zcat /proc/config.gz > ./.config
 		else
@@ -210,17 +214,17 @@ prepare() {
 
     ### Set GCC flags
         if [ -n "$_gcc_haswell" ]; then
-                msg2 "Setting GCC flags for Intel Haswell CPU..."
+                echo "Setting GCC flags for Intel Haswell CPU..."
                 sed -i -e s'/^CONFIG_GENERIC_CPU=y/# CONFIG_GENERIC_CPU is not set/' \
                     -i -e s'/^# CONFIG_MHASWELL is not set/CONFIG_MHASWELL=y/' ./.config
         fi
 
     ### Set performance governor
         if [ -n "$_per_gov" ]; then
-                msg2 "Setting performance governor..."
+                echo "Setting performance governor..."
                 sed -i -e s'/^CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL=y/# CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL is not set/' \
                     -i -e s'/^# CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE is not set/CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y/' ./.config
-                msg2 "Disabling uneeded governors..."
+                echo "Disabling uneeded governors..."
                 sed -i -e s'/^CONFIG_CPU_FREQ_GOV_ONDEMAND=m/# CONFIG_CPU_FREQ_GOV_ONDEMAND is not set/' \
                     -i -e s'/^CONFIG_CPU_FREQ_GOV_CONSERVATIVE=m/# CONFIG_CPU_FREQ_GOV_CONSERVATIVE is not set/' \
                     -i -e s'/^CONFIG_CPU_FREQ_GOV_USERSPACE=m/# CONFIG_CPU_FREQ_GOV_USERSPACE is not set/' \
@@ -229,19 +233,26 @@ prepare() {
 
     ### Disable Deadline I/O scheduler
 	if [ -n "$_deadline_disable" ]; then
-		msg2 "Disabling Deadline I/O scheduler..."
+		echo "Disabling Deadline I/O scheduler..."
 		sed -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
 	fi
 
     ### Disable Kyber I/O scheduler
 	if [ -n "$_kyber_disable" ]; then
-		msg2 "Disabling Kyber I/O scheduler..."
+		echo "Disabling Kyber I/O scheduler..."
 		sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
 	fi
 
+    ### Enable KBUILD_CFLAGS -O3
+	if [ -n "$_cc_harder" ]; then
+		echo "Enabling KBUILD_CFLAGS -O3..."
+		sed -i -e s'/^CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y/# CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE is not set/' \
+                    -i -e s'/^# CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3 is not set/CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y/' ./.config
+        fi
+
     ### Optionally set tickrate to 1000
 	if [ -n "$_1k_HZ_ticks" ]; then
-		msg2 "Setting tick rate to 1k..."
+		echo "Setting tick rate to 1k..."
 		sed -i -e 's/^CONFIG_HZ_300=y/# CONFIG_HZ_300 is not set/' \
                     -i -e 's/^# CONFIG_HZ_1000 is not set/CONFIG_HZ_1000=y/' \
                     -i -e 's/^CONFIG_HZ=300/CONFIG_HZ=1000/' ./.config
@@ -250,7 +261,7 @@ prepare() {
     ### Optionally disable NUMA for 64-bit kernels only
         # (x86 kernels do not support NUMA)
         if [ -n "$_NUMAdisable" ]; then
-            msg2 "Disabling NUMA from kernel config..."
+            echo "Disabling NUMA from kernel config..."
             sed -i -e 's/CONFIG_NUMA=y/# CONFIG_NUMA is not set/' \
                 -i -e '/CONFIG_AMD_NUMA=y/d' \
                 -i -e '/CONFIG_X86_64_ACPI_NUMA=y/d' \
@@ -267,32 +278,32 @@ prepare() {
         # See https://aur.archlinux.org/packages/modprobed-db
         if [ -n "$_localmodcfg" ]; then
             if [ -f $HOME/.config/modprobed.db ]; then
-            msg2 "Running Steven Rostedt's make localmodconfig now"
+            echo "Running Steven Rostedt's make localmodconfig now"
             make LSMOD=$HOME/.config/modprobed.db localmodconfig
         else
-            msg2 "No modprobed.db data found"
+            echo "No modprobed.db data found"
             exit
             fi
         fi
 
     ### Enable WireGuard
         if [ ! -e "$_net_udp_tunnel" ]; then
-            msg2 "Enabling WireGuard..."
+            echo "Enabling WireGuard..."
             sed -i s'/^CONFIG_NET_UDP_TUNNEL=m/CONFIG_NET_UDP_TUNNEL=y/' ./.config
         fi
         if [ ! -e "$_wireguard" ]; then
-            msg2 "Enabling WireGuard..."
+            echo "Enabling WireGuard..."
             sed -i s'/^# CONFIG_WIREGUARD is not set/CONFIG_WIREGUARD=y/' ./.config
         fi
 
     ### Rewrite configuration
-        msg2 "Rewrite configuration..."
+        echo "Rewrite configuration..."
         make prepare
         yes "" | make config >/dev/null
 
     ### Prepared version
         make -s kernelrelease > version
-        msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
+        echo "Prepared %s version %s" "$pkgbase" "$(<version)"
 
     ### Running make nconfig
 
@@ -311,7 +322,7 @@ prepare() {
 	[[ -z "$_makegconfig" ]] || make gconfig
 
     ### Save configuration for later reuse
-	msg2 "Save configuration for later reuse..."
+	echo "Save configuration for later reuse..."
 	cat .config > "${startdir}/config.last"
 }
 
@@ -333,7 +344,7 @@ _package-kernel() {
   local kernver="$(<version)"
   local modulesdir="$pkgdir/usr/lib/modules/$kernver"
 
-  msg2 "Installing boot image..."
+  echo "Installing boot image..."
   # systemd expects to find the kernel here to allow hibernation
   # https://github.com/systemd/systemd/commit/edda44605f06a41fb86b7ab8128dcf99161d2344
   install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
@@ -341,13 +352,13 @@ _package-kernel() {
   # Used by mkinitcpio to name the kernel
   echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
 
-  msg2 "Installing modules..."
+  echo "Installing modules..."
   make INSTALL_MOD_PATH="$pkgdir/usr" modules_install
 
   # remove build and source links
   rm "$modulesdir"/{source,build}
 
-  msg2 "Fixing permissions..."
+  echo "Fixing permissions..."
   chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
@@ -359,7 +370,7 @@ _package-headers() {
   cd $_srcname
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
-  msg2 "Installing build files..."
+  echo "Installing build files..."
   install -Dt "$builddir" -m644 .config Makefile Module.symvers System.map \
     localversion.* version vmlinux
   install -Dt "$builddir/kernel" -m644 kernel/Makefile
@@ -372,7 +383,7 @@ _package-headers() {
   # add xfs and shmem for aufs building
   mkdir -p "$builddir"/{fs/xfs,mm}
 
-  msg2 "Installing headers..."
+  echo "Installing headers..."
   cp -t "$builddir" -a include
   cp -t "$builddir/arch/x86" -a arch/x86/include
   install -Dt "$builddir/arch/x86/kernel" -m644 arch/x86/kernel/asm-offsets.s
@@ -388,10 +399,10 @@ _package-headers() {
   install -Dt "$builddir/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/*.h
   install -Dt "$builddir/drivers/media/tuners" -m644 drivers/media/tuners/*.h
 
-  msg2 "Installing KConfig files..."
+  echo "Installing KConfig files..."
   find . -name 'Kconfig*' -exec install -Dm644 {} "$builddir/{}" \;
 
-  msg2 "Removing unneeded architectures..."
+  echo "Removing unneeded architectures..."
   local arch
   for arch in "$builddir"/arch/*/; do
     [[ $arch = */x86/ ]] && continue
@@ -399,13 +410,13 @@ _package-headers() {
     rm -r "$arch"
   done
 
-  msg2 "Removing broken symlinks..."
+  echo "Removing broken symlinks..."
   find -L "$builddir" -type l -printf 'Removing %P\n' -delete
 
-  msg2 "Removing loose objects..."
+  echo "Removing loose objects..."
   find "$builddir" -type f -name '*.o' -printf 'Removing %P\n' -delete
 
-  msg2 "Stripping build tools..."
+  echo "Stripping build tools..."
   local file
   while read -rd '' file; do
     case "$(file -bi "$file")" in
@@ -420,11 +431,11 @@ _package-headers() {
     esac
   done < <(find "$builddir" -type f -perm -u+x ! -name vmlinux -print0)
 
-  msg2 "Adding symlink..."
+  echo "Adding symlink..."
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
 
-  msg2 "Fixing permissions..."
+  echo "Fixing permissions..."
   chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
@@ -437,9 +448,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'f268b6f82fe17e501323311be32dbdd9b3bb7c9017cda856bac962fb31b8b2f0a714b56eed52c40dd9d1b5d00c98daec76d56b55c1bf374ed6081e6b7e1edd34'
+            '665bf95bdbee210a08284e3571d07babf42dc058eb7eb1ac2a225032d4bd5cfc33c20f1cb2e62f105a89b6b0189fa82f4a6444bb0cb2252cff851f367012669b'
             'SKIP'
-            '5b02fdd9a4ac72eac314def65436be0bae2a31af6f6abb6dcb99f703e07994ef3048e857296df7e6498536d865ee10efd3a7c95d01eca0ef34f2670da2b7262d')
+            'bdc1562e9f4cf4e41353cee581c31299f0314561e516d0951e177903bdab5d3c2689d4bd611128b093d1b4600e5c9c229f05a65d8a617ca5843186933a846a99')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
