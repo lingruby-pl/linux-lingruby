@@ -32,7 +32,7 @@ _NUMAdisable=y
 # This PKGBUILD read the database kept if it exists
 #
 # More at this wiki page ---> https://wiki.archlinux.org/index.php/Modprobed-db
-_localmodcfg=
+_localmodcfg=y
 
 # Use the current kernel's .config file
 # Enabling this option will use the .config of the RUNNING kernel rather than
@@ -78,12 +78,12 @@ _linux_lucjan='actual'
 
 ### Do not edit below this line unless you know what you're doing
 
-pkgbase=linux-lingruby-git+
+pkgbase=linux-lingruby+
 _pkgbase=linux-lucjan
-# pkgname=('linux-lingruby-git+-kernel' 'linux-lingruby-git+-headers')
+# pkgname=('linux-lingruby+-kernel' 'linux-lingruby+-headers')
 _major=5.5
 _srcname=linux
-pkgver=5.5.1.r0.g70c707aae3e5.ll3
+pkgver=5.5.2.r0.g567f0ad8b0b7.ll11
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -130,7 +130,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll3'
+ _lucjanrev='ll11'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -338,7 +338,7 @@ _package-kernel() {
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
-  groups=('linux-lingruby-git+')
+  groups=('linux-lingruby+')
 
   cd $_srcname
   local kernver="$(<version)"
@@ -364,8 +364,8 @@ _package-kernel() {
 
 _package-headers() {
   pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('linux-lingruby-git+-kernel')
-  groups=('linux-lingruby-git+')
+  depends=('linux-lingruby+-kernel')
+  groups=('linux-lingruby+')
 
   cd $_srcname
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
@@ -448,9 +448,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '665bf95bdbee210a08284e3571d07babf42dc058eb7eb1ac2a225032d4bd5cfc33c20f1cb2e62f105a89b6b0189fa82f4a6444bb0cb2252cff851f367012669b'
+            '489c0e61c8244a97b388c1253e8108c16adfaaa9d2d7cc9ab4bebc688ff98981523682b1417264d0c4311cf1ef0fa528344b78b0606405305ebc5244da3ba87a'
             'SKIP'
-            'bdc1562e9f4cf4e41353cee581c31299f0314561e516d0951e177903bdab5d3c2689d4bd611128b093d1b4600e5c9c229f05a65d8a617ca5843186933a846a99')
+            '69c6e4f3ff6490b9b3a2a5a9e1e45be532d635cc364b8696d5024c268d77f423b8c17479466c3cf441e2aa5d8874479f524c3f28e828b817080a829933cd6cbd')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
