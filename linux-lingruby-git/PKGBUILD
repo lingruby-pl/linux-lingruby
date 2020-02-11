@@ -32,7 +32,7 @@ _NUMAdisable=y
 # This PKGBUILD read the database kept if it exists
 #
 # More at this wiki page ---> https://wiki.archlinux.org/index.php/Modprobed-db
-_localmodcfg=
+_localmodcfg=y
 
 # Use the current kernel's .config file
 # Enabling this option will use the .config of the RUNNING kernel rather than
@@ -83,15 +83,14 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby+-kernel' 'linux-lingruby+-headers')
 _major=5.5
 _srcname=linux
-pkgver=5.5.2.r0.g567f0ad8b0b7.ll11
+pkgver=5.5.3.r0.gdeff2fcb0de9.ll19
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
 license=('GPL2')
 options=('!strip')
-makedepends=('kmod' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme'
-             'graphviz' 'imagemagick')
+makedepends=('git' 'bc' 'kmod')
 
 ### BFQ reverts
 # Some patches for BFQ conflict with patches for BFQ-dev.
@@ -130,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll11'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -157,7 +156,9 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/${_srcname}.git#br
          # bfq-reverts
          # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
-        "${_lucjanpath}/${_lucjanpatch}"{,.sig}
+         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
+         # "https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/5.5/cpu-patches/0001-cpu-patches.patch"
+         # "https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/5.5/wireguard-patches/0001-WireGuard-20200205.patch"
          # the main kernel config files
         'config')
 
@@ -448,9 +449,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '489c0e61c8244a97b388c1253e8108c16adfaaa9d2d7cc9ab4bebc688ff98981523682b1417264d0c4311cf1ef0fa528344b78b0606405305ebc5244da3ba87a'
+            '6aef07c60ee842cdc9f938b3019bec5691e195820044730484c668b1a943afee91dbd659484c042d54532afe06025f6036ec42a7b9fb99e0697c6029c557a872'
             'SKIP'
-            '69c6e4f3ff6490b9b3a2a5a9e1e45be532d635cc364b8696d5024c268d77f423b8c17479466c3cf441e2aa5d8874479f524c3f28e828b817080a829933cd6cbd')
+            '65861acbd93d0aaf0246928c3c171caa14559d53b112a8c3d552a314aac35d73efad9ab45ebbcf01d663a72750fc44f38e8c1fd20dba6a2f42aaa5eb20eba283')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
