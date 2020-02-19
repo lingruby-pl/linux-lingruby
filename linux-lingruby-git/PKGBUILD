@@ -84,7 +84,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby+-kernel' 'linux-lingruby+-headers')
 _major=5.5
 _srcname=linux
-pkgver=5.5.4.r0.g3f29db9524f0.ll29
+pkgver=5.5.5.r0.ge36d2b2f21eb.ll29
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -454,7 +454,7 @@ done
 sha512sums=('SKIP'
             '3d76324ed1546e032d13f64ce1faad4a923d82c72965cc6a703da902e49bb5c2b0ce38b8bcff0127db575586bee82f248b316eb13004b9d5f96804ddf983329b'
             'SKIP'
-            '873e4efed0890a5b5b459714fac453e4dab0602903b5addcc97303abade25b9180bdce8c285ac3637b0fe5e16b357850352089989898ff1fa3a5f1d6624f4985')
+            '8f023ffb36a8e66eff529e1da38730853efc3929f447118b7d7d88d29949922f2a716721aef9b2677c81741d94fd9ae7eacada9e2d8ef9154b8354eedeb96739')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
