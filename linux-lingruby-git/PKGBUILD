@@ -1,4 +1,4 @@
-# Maintainer: Jacek Bienias <sp7ezd@gmail.com>
+# Maintainer: Jacek Bienias <sp7ezd at gmail.com>
 # Maintainer: Piotr Gorski <lucjan.lucjanov@gmail.com>
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
@@ -62,6 +62,7 @@ _1k_HZ_ticks=y
 ### Enable WireGuard
 _net_udp_tunnel=y
 _wireguard=y
+_wireguard_debug=y
 
 ### Download bfq-reverts patchset
 # ATTENTION - one of two predefined values should be selected!
@@ -83,7 +84,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lingruby+-kernel' 'linux-lingruby+-headers')
 _major=5.5
 _srcname=linux
-pkgver=5.5.4.r0.g3f29db9524f0.ll27
+pkgver=5.5.4.r0.g3f29db9524f0.ll29
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -129,7 +130,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll27'
+ _lucjanrev='ll29'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -294,6 +295,10 @@ prepare() {
             echo "Enabling WireGuard..."
             sed -i s'/^# CONFIG_WIREGUARD is not set/CONFIG_WIREGUARD=y/' ./.config
         fi
+        if [ ! -e "$_wireguard_debug" ]; then
+            echo "Enabling WireGuard..."
+            sed -i s'/^# CONFIG_WIREGUARD_DEBUG is not set/CONFIG_WIREGUARD_DEBUG=y/' ./.config
+        fi
 
     ### Rewrite configuration
         echo "Rewrite configuration..."
@@ -447,9 +452,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'a7e1d1657fb5d582b8eded45398be12292b7ab9f9196ddb2af583a87d4e75bd3413b9c839b26263406f1b477bc94962b60ad090fb82c8d33f21c6e21eaeeb3bb'
+            '3d76324ed1546e032d13f64ce1faad4a923d82c72965cc6a703da902e49bb5c2b0ce38b8bcff0127db575586bee82f248b316eb13004b9d5f96804ddf983329b'
             'SKIP'
-            'e13948f99153c2e8ac7465749cd98d905ccb4ca97967345fc31c4b73b3e3c7ca4f49a2bbae0d329204cce3dca8b2f04ecb30b1c02068930db358e556f750e4e1')
+            '873e4efed0890a5b5b459714fac453e4dab0602903b5addcc97303abade25b9180bdce8c285ac3637b0fe5e16b357850352089989898ff1fa3a5f1d6624f4985')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
