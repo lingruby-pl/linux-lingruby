@@ -81,17 +81,16 @@ _linux_lucjan='actual'
 
 pkgbase=linux-lingruby+
 _pkgbase=linux-lucjan
-# pkgname=('linux-lingruby+-kernel' 'linux-lingruby+-headers')
 _major=5.5
-_srcname=linux
-pkgver=5.5.5.r0.ge36d2b2f21eb.ll30
+pkgver=5.5.5
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
 license=('GPL2')
 options=('!strip')
-makedepends=('git' 'bc' 'kmod')
+_srcname="linux-${pkgver}"
+makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git') 
 
 ### BFQ reverts
 # Some patches for BFQ conflict with patches for BFQ-dev.
@@ -130,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll30'
+ _lucjanrev='ll31'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -153,24 +152,20 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 
 fi
 
-source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/${_srcname}.git#branch=linux-${_major}.y"
-         # bfq-reverts
-         # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
-         # linux-lucjan
-         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
-         # the main kernel config files
-        'config')
+source=("https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
+        "https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.sign"
+        # bfq-reverts
+        # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+        # linux-lucjan
+        "${_lucjanpath}/${_lucjanpatch}"{,.sig}
+        # the main kernel config files
+        'config'
+        'linux.preset')
 
 export KBUILD_BUILD_HOST=arch-bspwm
 export KBUILD_BUILD_USER=$pkgbase
 export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})"
 
-pkgver() {
-    cd $_srcname
-
-    _ver="$(git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')"
-    printf ${_ver}.${_lucjanrev}
-}
 
 prepare() {
     cd $_srcname
@@ -342,7 +337,8 @@ _package-kernel() {
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
-  groups=('linux-lingruby+')
+  provides=("${pkgbase}=${pkgver}" "linux=${pkgver}")
+  backup=("etc/mkinitcpio.d/${pkgbase}.preset")
 
   cd $_srcname
   local kernver="$(<version)"
@@ -362,14 +358,21 @@ _package-kernel() {
   # remove build and source links
   rm "$modulesdir"/{source,build}
 
+  # installing preset
+  echo "Installing preset..."
+  # sed expression for following substitutions
+  local subst="s|%PKGBASE%|$pkgbase|g"
+  # fill in mkinitcpio preset
+  sed "$subst" ../linux.preset | install -Dm644 /dev/stdin "$pkgdir/etc/mkinitcpio.d/$pkgbase.preset"
+
   echo "Fixing permissions..."
   chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
 _package-headers() {
   pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('linux-lingruby+-kernel')
-  groups=('linux-lingruby+')
+  provides=("${pkgbase}-headers=${pkgver}" "linux-headers=${pkgver}")
+  depends=("${pkgbase}=${pkgver}")
 
   cd $_srcname
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
@@ -451,11 +454,16 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('SKIP'
-            '7c0d5801e4c8999930bab55d5384f63cb4f7c06fba6b2685f13152d70ecdc047b93d470965f686f9dd92c33470a2e0bfae2bbc3489ea690224efc980660f2c69'
+sha512sums=('2d0ed596509546169d0e0d46c23e10920e6b565178e044fe57b68b7ff0ec5c613bb090105affc74e5bcacda36f8c8a49c269017e90dd7145f58e9359707f35d1'
             'SKIP'
-            '7bc9a62a1363bd5a037ad01d0cd04ab0945a582b5b4a7779f4cc777dbfbe0b2325d5acddc8763665df14d149000faf85fd67a1fd6950a655a2fae225ac8770d1')
+            'b6bee9ea870c5b808132612338e74aa2e4ea33674f3b992b5b036834b809cb5cfb854da0514f343871bac5ce4ed7063700bf937d00ef5da9e4562a8c9d41702b'
+            'SKIP'
+            '869ce25b3a543cf6fb7c4109d156d360bd16809e0b6101663cf4633ef136d5b36d31478b692aca41a0903100eb98ba9ba063ec8d35c9cb6b596b8505687f1a4e'
+            'fbfd1902d3bddbbf64743a9ea6bd0cc0bf59c9412a05af084d465bff183030cd4324afbfdb7e9cbc5164328b0966181109767fa60bb3582f709ae4a99859d691')
 
 validpgpkeys=(
-              '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
+              '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A'  # Piotr Gorski
+              'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
+              '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
+              '8218F88849AAC522E94CF470A5E9288C4FA415FA'  # Jan Alexander Steffens (heftig)
              )
