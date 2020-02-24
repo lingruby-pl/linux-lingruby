@@ -82,7 +82,7 @@ _linux_lucjan='actual'
 pkgbase=linux-lingruby+
 _pkgbase=linux-lucjan
 _major=5.5
-pkgver=5.5.5
+pkgver=5.5.6
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -90,7 +90,7 @@ url="https://github.com/lingruby-pl/linux-lingruby"
 license=('GPL2')
 options=('!strip')
 _srcname="linux-${pkgver}"
-makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git') 
+makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git')
 
 ### BFQ reverts
 # Some patches for BFQ conflict with patches for BFQ-dev.
@@ -129,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll31'
+ _lucjanrev='ll32'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -155,7 +155,7 @@ fi
 source=("https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.sign"
         # bfq-reverts
-        # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
         # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
         # the main kernel config files
@@ -193,19 +193,19 @@ prepare() {
         cp ../config .config
 
     ### Optionally use running kernel's config
-	# code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
-	if [ -n "$_use_current" ]; then
-		if [[ -s /proc/config.gz ]]; then
-			echo "Extracting config from /proc/config.gz..."
-			# modprobe configs
-			zcat /proc/config.gz > ./.config
-		else
-			warning "Your kernel was not compiled with IKCONFIG_PROC!"
-			warning "You cannot read the current config!"
-			warning "Aborting!"
-			exit
-		fi
-	fi
+    # code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
+        if [ -n "$_use_current" ]; then
+            if [[ -s /proc/config.gz ]]; then
+                echo "Extracting config from /proc/config.gz..."
+                # modprobe configs
+                zcat /proc/config.gz > ./.config
+            else
+                warning "Your kernel was not compiled with IKCONFIG_PROC!"
+                warning "You cannot read the current config!"
+                warning "Aborting!"
+                exit
+            fi
+        fi
 
     ### Set GCC flags
         if [ -n "$_gcc_haswell" ]; then
@@ -227,54 +227,54 @@ prepare() {
         fi
 
     ### Disable Deadline I/O scheduler
-	if [ -n "$_deadline_disable" ]; then
-		echo "Disabling Deadline I/O scheduler..."
-		sed -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
-	fi
+        if [ -n "$_deadline_disable" ]; then
+                echo "Disabling Deadline I/O scheduler..."
+                sed -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
+        fi
 
     ### Disable Kyber I/O scheduler
-	if [ -n "$_kyber_disable" ]; then
-		echo "Disabling Kyber I/O scheduler..."
-		sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
-	fi
+        if [ -n "$_kyber_disable" ]; then
+                echo "Disabling Kyber I/O scheduler..."
+                sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
+        fi
 
     ### Enable KBUILD_CFLAGS -O3
-	if [ -n "$_cc_harder" ]; then
-		echo "Enabling KBUILD_CFLAGS -O3..."
-		sed -i -e s'/^CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y/# CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE is not set/' \
+        if [ -n "$_cc_harder" ]; then
+                echo "Enabling KBUILD_CFLAGS -O3..."
+                sed -i -e s'/^CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y/# CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE is not set/' \
                     -i -e s'/^# CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3 is not set/CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y/' ./.config
         fi
 
     ### Optionally set tickrate to 1000
-	if [ -n "$_1k_HZ_ticks" ]; then
-		echo "Setting tick rate to 1k..."
-		sed -i -e 's/^CONFIG_HZ_300=y/# CONFIG_HZ_300 is not set/' \
+        if [ -n "$_1k_HZ_ticks" ]; then
+                echo "Setting tick rate to 1k..."
+                sed -i -e 's/^CONFIG_HZ_300=y/# CONFIG_HZ_300 is not set/' \
                     -i -e 's/^# CONFIG_HZ_1000 is not set/CONFIG_HZ_1000=y/' \
                     -i -e 's/^CONFIG_HZ=300/CONFIG_HZ=1000/' ./.config
-	fi
+        fi
 
     ### Optionally disable NUMA for 64-bit kernels only
         # (x86 kernels do not support NUMA)
         if [ -n "$_NUMAdisable" ]; then
             echo "Disabling NUMA from kernel config..."
-            sed -i -e 's/CONFIG_NUMA=y/# CONFIG_NUMA is not set/' \
-                -i -e '/CONFIG_AMD_NUMA=y/d' \
-                -i -e '/CONFIG_X86_64_ACPI_NUMA=y/d' \
-                -i -e '/CONFIG_NODES_SPAN_OTHER_NODES=y/d' \
-                -i -e '/# CONFIG_NUMA_EMU is not set/d' \
-                -i -e '/CONFIG_NODES_SHIFT=6/d' \
-                -i -e '/CONFIG_NEED_MULTIPLE_NODES=y/d' \
-                -i -e '/# CONFIG_MOVABLE_NODE is not set/d' \
-                -i -e '/CONFIG_USE_PERCPU_NUMA_NODE_ID=y/d' \
-                -i -e '/CONFIG_ACPI_NUMA=y/d' ./.config
+                sed -i -e 's/CONFIG_NUMA=y/# CONFIG_NUMA is not set/' \
+                    -i -e '/CONFIG_AMD_NUMA=y/d' \
+                    -i -e '/CONFIG_X86_64_ACPI_NUMA=y/d' \
+                    -i -e '/CONFIG_NODES_SPAN_OTHER_NODES=y/d' \
+                    -i -e '/# CONFIG_NUMA_EMU is not set/d' \
+                    -i -e '/CONFIG_NODES_SHIFT=6/d' \
+                    -i -e '/CONFIG_NEED_MULTIPLE_NODES=y/d' \
+                    -i -e '/# CONFIG_MOVABLE_NODE is not set/d' \
+                    -i -e '/CONFIG_USE_PERCPU_NUMA_NODE_ID=y/d' \
+                    -i -e '/CONFIG_ACPI_NUMA=y/d' ./.config
         fi
 
     ### Optionally load needed modules for the make localmodconfig
         # See https://aur.archlinux.org/packages/modprobed-db
         if [ -n "$_localmodcfg" ]; then
             if [ -f $HOME/.config/modprobed.db ]; then
-            echo "Running Steven Rostedt's make localmodconfig now"
-            make LSMOD=$HOME/.config/modprobed.db localmodconfig
+                echo "Running Steven Rostedt's make localmodconfig now"
+                make LSMOD=$HOME/.config/modprobed.db localmodconfig
         else
             echo "No modprobed.db data found"
             exit
@@ -283,55 +283,55 @@ prepare() {
 
     ### Enable WireGuard
         if [ ! -e "$_net_udp_tunnel" ]; then
-            echo "Enabling WireGuard..."
-            sed -i s'/^CONFIG_NET_UDP_TUNNEL=m/CONFIG_NET_UDP_TUNNEL=y/' ./.config
+                echo "Enabling WireGuard..."
+                sed -i s'/^CONFIG_NET_UDP_TUNNEL=m/CONFIG_NET_UDP_TUNNEL=y/' ./.config
         fi
         if [ ! -e "$_wireguard" ]; then
-            echo "Enabling WireGuard..."
+                echo "Enabling WireGuard..."
             sed -i s'/^# CONFIG_WIREGUARD is not set/CONFIG_WIREGUARD=y/' ./.config
         fi
         if [ ! -e "$_wireguard_debug" ]; then
-            echo "Enabling WireGuard..."
-            sed -i s'/^# CONFIG_WIREGUARD_DEBUG is not set/CONFIG_WIREGUARD_DEBUG=y/' ./.config
+                echo "Enabling WireGuard..."
+                sed -i s'/^# CONFIG_WIREGUARD_DEBUG is not set/CONFIG_WIREGUARD_DEBUG=y/' ./.config
         fi
 
     ### Rewrite configuration
-        echo "Rewrite configuration..."
-        make prepare
-        yes "" | make config >/dev/null
+                echo "Rewrite configuration..."
+                make prepare
+                yes "" | make config >/dev/null
 
     ### Prepared version
-        make -s kernelrelease > version
-        echo "Prepared %s version %s" "$pkgbase" "$(<version)"
+                make -s kernelrelease > version
+                echo "Prepared %s version %s" "$pkgbase" "$(<version)"
 
     ### Running make nconfig
 
-	[[ -z "$_makenconfig" ]] ||  make nconfig
+    [[ -z "$_makenconfig" ]] ||  make nconfig
 
     ### Running make menuconfig
 
-	[[ -z "$_makemenuconfig" ]] || make menuconfig
+    [[ -z "$_makemenuconfig" ]] || make menuconfig
 
     ### Running make xconfig
 
-	[[ -z "$_makexconfig" ]] || make xconfig
+    [[ -z "$_makexconfig" ]] || make xconfig
 
     ### Running make gconfig
 
-	[[ -z "$_makegconfig" ]] || make gconfig
+    [[ -z "$_makegconfig" ]] || make gconfig
 
     ### Save configuration for later reuse
-	echo "Save configuration for later reuse..."
-	cat .config > "${startdir}/config.last"
+    echo "Save configuration for later reuse..."
+    cat .config > "${startdir}/config.last"
 }
 
 build() {
   cd $_srcname
 
-  make bzImage modules
+  make all
 }
 
-_package-kernel() {
+_package() {
   pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('coreutils' 'kmod' 'initramfs')
   optdepends=('crda: to set the correct wireless channels of your country'
@@ -446,7 +446,7 @@ _package-headers() {
   chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
-pkgname=("$pkgbase-kernel" "$pkgbase-headers")
+pkgname=("$pkgbase" "$pkgbase-headers")
 for _p in "${pkgname[@]}"; do
   eval "package_$_p() {
     $(declare -f "_package${_p#$pkgbase}")
@@ -454,16 +454,18 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('2d0ed596509546169d0e0d46c23e10920e6b565178e044fe57b68b7ff0ec5c613bb090105affc74e5bcacda36f8c8a49c269017e90dd7145f58e9359707f35d1'
+sha512sums=('faa2c4687d7da6eb4d0db08492408b64558166bd4918e88c01b1fa34893aaeee8dc352aa10dc8f58628f224bdfee7a7f8e88b98da771463237898845f45407e3'
             'SKIP'
-            'b6bee9ea870c5b808132612338e74aa2e4ea33674f3b992b5b036834b809cb5cfb854da0514f343871bac5ce4ed7063700bf937d00ef5da9e4562a8c9d41702b'
+            'cafac86fa68cae1de3f7d4ba9f9803ae107dbae7f13f82f8fc8f554f84d5d57025a15e8529b533ef18b58a3407240e7954cebcb5b7f392726a906c32d00efaac'
             'SKIP'
-            '869ce25b3a543cf6fb7c4109d156d360bd16809e0b6101663cf4633ef136d5b36d31478b692aca41a0903100eb98ba9ba063ec8d35c9cb6b596b8505687f1a4e'
+            '7fba8fefb1d7080e850e7ca2c1522ba6118e161754268245ad532bb576e967c675c0cd2db07b3d85e96dd7a85673fb3425d08301c91c8fca2adebb0aa266efd2'
+            'SKIP'
+            '1010c74d27ca4493d10a9de7baa63b5b0a181548eeeac89ef185e369bf6ef7ea4b10e5ddbd4c9fa0aacbd3c6451453de5029096611c84d4d0d2a378f85c0e211'
             'fbfd1902d3bddbbf64743a9ea6bd0cc0bf59c9412a05af084d465bff183030cd4324afbfdb7e9cbc5164328b0966181109767fa60bb3582f709ae4a99859d691')
 
 validpgpkeys=(
-              '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A'  # Piotr Gorski
-              'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
-              '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
-              '8218F88849AAC522E94CF470A5E9288C4FA415FA'  # Jan Alexander Steffens (heftig)
+            '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A'  # Piotr Gorski
+            'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
+            '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
+            '8218F88849AAC522E94CF470A5E9288C4FA415FA'  # Jan Alexander Steffens (heftig)
              )
