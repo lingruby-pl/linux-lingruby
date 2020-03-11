@@ -79,7 +79,7 @@ _linux_lucjan='actual'
 
 ### Do not edit below this line unless you know what you're doing
 
-pkgbase=linux-lingruby+
+pkgbase=linux-lingruby-ll
 _pkgbase=linux-lucjan
 _major=5.5
 pkgver=5.5.8
@@ -129,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll37'
+ _lucjanrev='ll39'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -458,9 +458,9 @@ sha512sums=('0aecbfaae033834db85d17349aeb22d62168244eb2a5db627c7bcab8a2800dfae6e
             'SKIP'
             'cafac86fa68cae1de3f7d4ba9f9803ae107dbae7f13f82f8fc8f554f84d5d57025a15e8529b533ef18b58a3407240e7954cebcb5b7f392726a906c32d00efaac'
             'SKIP'
-            '5263b1879c991cf584d4bf71dda21d985bf6658b5842f4618c0a0b04adb907836f015dbdd8a1de988724c7dbbee4f0a1cb822217e700eb468a517be72c809a41'
+            'ee7a4612679ad61fe3014d4fa6905dd4faa557e37da189b274405ec1b0b73b52bc3a12c6eeb20fdce7ad75e0e6ac37410f1d880d3720084420d383fd7882e454'
             'SKIP'
-            '070aaa148949878637f9c70321cc887e8a07818a6093a6354767a3773ac7bea07e0c5c48f749bd03c9fa9245a63b51da6e67c4c966198d62ae22d5e82e0bfe5b'
+            'e53f525e3e923ad7d7e77dd6cca964754a94bea3f822bc1c710091398be66ccf4e6846df17d37489032cd9824f673d5d2a3d1eb56cc3e012b79fa74b695518c5'
             'fbfd1902d3bddbbf64743a9ea6bd0cc0bf59c9412a05af084d465bff183030cd4324afbfdb7e9cbc5164328b0966181109767fa60bb3582f709ae4a99859d691')
 
 validpgpkeys=(
