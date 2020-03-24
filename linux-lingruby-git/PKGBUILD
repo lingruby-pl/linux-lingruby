@@ -111,7 +111,7 @@ elif [ "$_bfq_rev" = "unstable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/unstable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver1'
+ _bfqrevver='ver3'
  _bfqrevrc='rc1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
@@ -129,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll48'
+ _lucjanrev='ll50'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -458,9 +458,9 @@ sha512sums=('86e86120777eecb66ce2a6cb80c5f0c3fd184eaadcb82bc5d6076a0eddd8548e83a
             'SKIP'
             '7380a402f9c5cd80d2f99d12022a7ed92a47abf9e6c2fe40c0ef7423e6cbb2b457608866d976ab39caa10e62fb9188c689c7a48fbf28794f1865ec232380d474'
             'SKIP'
-            '14cd8b80434488cd1dd8ea49e894e00a01cd832edacbdd7b97be51c81e81044f29417086d45451b5ea3325126d79ba5deb97ddae3f9c9267516b657e18f8a604'
+            'b37ace903da6607a3ff4e7e6eef6add45be2a80ae756c7290317b2e235cc310b536372189ff3ad260b2db6d4ea7094640c739a708811668c92cdc9dc33b6fd04'
             'SKIP'
-            'e9b4e5fadc0fe15a907424a2250e6c6820bdfe7c5bad9261a5cfb3efd5f1b04581b82a65cc783ccf661e5c07c46c7a9a5137a5067d3c8d0d1f76009b0799586f'
+            'a2f0c30d6b80ea1101c72062b62bd494fbc9df480612e5b3311c1613da4d2a839a15b5c9e8110dff5bc9c5340c1dcb600ee1949887d51e05a5c517ffd9014fa8'
             'fbfd1902d3bddbbf64743a9ea6bd0cc0bf59c9412a05af084d465bff183030cd4324afbfdb7e9cbc5164328b0966181109767fa60bb3582f709ae4a99859d691')
 
 validpgpkeys=(
