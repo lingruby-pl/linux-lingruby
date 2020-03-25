@@ -82,7 +82,7 @@ _linux_lucjan='actual'
 pkgbase=linux-lingruby-ll
 _pkgbase=linux-lucjan
 _major=5.5
-pkgver=5.5.12
+pkgver=5.5.13
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -454,13 +454,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('59dbf4c078114863ea7228b8376e2a33dda4db6c5fbc7be1db616bc9e13ec993cc418b8b457f319f3e56628e5d9eb7b9c0a4de5f310712bfcd4448df37490a4a'
+sha512sums=('33b7f709275143c3ba10c3537d84dcc8ef822bc16de3d78411dc4c36650746fdbfb6c438b63a201ad4ffecc69028785ccdbb03257428eeed0b96aa45cdda64f0'
             'SKIP'
             '7380a402f9c5cd80d2f99d12022a7ed92a47abf9e6c2fe40c0ef7423e6cbb2b457608866d976ab39caa10e62fb9188c689c7a48fbf28794f1865ec232380d474'
             'SKIP'
             'b8cd4c7a2a47a3caf2146f22569e400c77a89088f208a4f4da4990fffb4cbca389b104f81bccd803d118bdd4f957aeaf6595f65739d6be06d5f685125c97a973'
             'SKIP'
-            '7f55e60a0e14cf70cbe6f28b8907674bdfdb424aa5aa38ab1d31e127b9afd583336f060a1294304a9023bc6b09f21a2fc6d4c5071eb0051b37f3701da2aedaac'
+            '91c7d699d016dfecccba0dd2c12ff25d54da9a87b6bfe14edd60e50149ecc0fcd582298c6a61f03f13e90301aff2f24642d2d6ff9a9adcc8340136686eb763b2'
             'fbfd1902d3bddbbf64743a9ea6bd0cc0bf59c9412a05af084d465bff183030cd4324afbfdb7e9cbc5164328b0966181109767fa60bb3582f709ae4a99859d691')
 
 validpgpkeys=(
