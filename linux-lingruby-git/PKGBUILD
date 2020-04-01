@@ -59,10 +59,8 @@ _cc_harder=y
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
-### Enable WireGuard
-_net_udp_tunnel=y
+### WireGuard: y=enable full built-in, n=disable entirely, empty=with no changes in config
 _wireguard=y
-_wireguard_debug=y
 
 ### Download bfq-reverts patchset
 # ATTENTION - one of two predefined values should be selected!
@@ -75,14 +73,14 @@ _bfq_rev='stable'
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
-pkgbase=linux-lingruby-ll
+pkgbase=linux-lingruby
 _pkgbase=linux-lucjan
-_major=5.5
-pkgver=5.5.13
+_major=5.6
+pkgver=5.6.1
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -146,7 +144,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll1'
+ _lucjanrev='ll5'
  _lucjanrc='rc2'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -156,7 +154,7 @@ fi
 source=("https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.sign"
         # bfq-reverts
-        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+        # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
         # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
         # the main kernel config files
@@ -283,18 +281,23 @@ prepare() {
         fi
 
     ### Enable WireGuard
-        if [ ! -e "$_net_udp_tunnel" ]; then
-                echo "Enabling WireGuard..."
-                sed -i s'/^CONFIG_NET_UDP_TUNNEL=m/CONFIG_NET_UDP_TUNNEL=y/' ./.config
-        fi
-        if [ ! -e "$_wireguard" ]; then
-                echo "Enabling WireGuard..."
-            sed -i s'/^# CONFIG_WIREGUARD is not set/CONFIG_WIREGUARD=y/' ./.config
-        fi
-        if [ ! -e "$_wireguard_debug" ]; then
-                echo "Enabling WireGuard..."
-                sed -i s'/^# CONFIG_WIREGUARD_DEBUG is not set/CONFIG_WIREGUARD_DEBUG=y/' ./.config
-        fi
+  if [ "$_wireguard" = y ]; then
+    echo "Enabling WireGuard built-in..."
+    sed -i -e 's/^# CONFIG_NET_UDP_TUNNEL.*/CONFIG_NET_UDP_TUNNEL=y/' \
+    -i -e 's/^CONFIG_NET_UDP_TUNNEL=.*/CONFIG_NET_UDP_TUNNEL=y/' ./.config
+    sed -i -e 's/^# CONFIG_WIREGUARD.*/CONFIG_WIREGUARD=y/' \
+    -i -e 's/^CONFIG_WIREGUARD=.*/CONFIG_WIREGUARD=y/' ./.config
+    sed -i -e 's/^# CONFIG_WIREGUARD_DEBUG.*/CONFIG_WIREGUARD_DEBUG=y/' \
+    -i -e 's/^CONFIG_WIREGUARD_DEBUG=.*/CONFIG_WIREGUARD_DEBUG=y/' ./.config
+  elif [ "$_wireguard" = n ]; then
+    echo "Disabling WireGuard"
+    sed -i -e 's/^# CONFIG_NET_UDP_TUNNEL.*/CONFIG_NET_UDP_TUNNEL=n/' \
+    -i -e 's/^CONFIG_NET_UDP_TUNNEL=.*/CONFIG_NET_UDP_TUNNEL=n/' ./.config
+    sed -i -e 's/^# CONFIG_WIREGUARD.*/CONFIG_WIREGUARD=n/' \
+    -i -e 's/^CONFIG_WIREGUARD=.*/CONFIG_WIREGUARD=n/' ./.config
+    sed -i -e 's/^# CONFIG_WIREGUARD_DEBUG.*/CONFIG_WIREGUARD_DEBUG=n/' \
+    -i -e 's/^CONFIG_WIREGUARD_DEBUG=.*/CONFIG_WIREGUARD_DEBUG=n/' ./.config
+  fi
 
     ### Rewrite configuration
                 echo "Rewrite configuration..."
@@ -455,13 +458,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('33b7f709275143c3ba10c3537d84dcc8ef822bc16de3d78411dc4c36650746fdbfb6c438b63a201ad4ffecc69028785ccdbb03257428eeed0b96aa45cdda64f0'
+sha512sums=('c87fc62d986b025d8d420d51db4068dd6e98eb720988ffc2b4f2a71e77d634305a69de6c42ef4b4bd46a6d01c67b6de18cf4648d9ee856f29694c337a1e84cfb'
             'SKIP'
-            '7380a402f9c5cd80d2f99d12022a7ed92a47abf9e6c2fe40c0ef7423e6cbb2b457608866d976ab39caa10e62fb9188c689c7a48fbf28794f1865ec232380d474'
+            '02e8ef484a818fcdc21183937de8c15e573ce5db57588a78f4bde63b262a8bf7493b1a4d0df4eef4d9e68f6a19fbb352c16a6dd64aa527973b06ad820b826bc4'
             'SKIP'
-            '471ad934680085f2dd3aa6a75b20e56bbc9ad93c822e44a98e626a6290e7cf3865e543d0ecd2fd9a32f2f1205a80838c7f214761948c57b6260314b3b45329b9'
-            'SKIP'
-            'cdd13db36dee09311aca0e4ab961eb98727750d2e76889d3d4eaba3c0ddf32c386c887d37e824cb2d8d6be2760d4c238d801474b23393d06716c62ec7f9ecb6a'
+            'baa6be6cf241d4e9a8d7d65bd67720ac8dbe0a1f8ec45f5daa86e16bd8909c2570878447cc413c4679eb9231febc23b5b1d07d4986b9168ae229264f4faf819f'
             'fbfd1902d3bddbbf64743a9ea6bd0cc0bf59c9412a05af084d465bff183030cd4324afbfdb7e9cbc5164328b0966181109767fa60bb3582f709ae4a99859d691')
 
 validpgpkeys=(
