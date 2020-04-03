@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.6.2.ll6 Kernel Configuration
+# Linux/x86 5.6.2.ll7 Kernel Configuration
 #
 
 #
@@ -4975,7 +4975,7 @@ CONFIG_STAGING_MEDIA=y
 # CONFIG_FIELDBUS_DEV is not set
 # CONFIG_USB_WUSB_CBAF is not set
 # CONFIG_UWB is not set
-CONFIG_STAGING_EXFAT_FS=m
+# CONFIG_STAGING_EXFAT_FS is not set
 CONFIG_STAGING_EXFAT_DISCARD=y
 # CONFIG_STAGING_EXFAT_DELAYED_SYNC is not set
 # CONFIG_STAGING_EXFAT_KERNEL_DEBUG is not set
