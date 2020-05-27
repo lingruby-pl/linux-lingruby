@@ -32,7 +32,7 @@ _NUMAdisable=y
 # This PKGBUILD read the database kept if it exists
 #
 # More at this wiki page ---> https://wiki.archlinux.org/index.php/Modprobed-db
-_localmodcfg=
+_localmodcfg=y
 
 # Use the current kernel's .config file
 # Enabling this option will use the .config of the RUNNING kernel rather than
@@ -80,7 +80,7 @@ _linux_lucjan='actual'
 pkgbase=linux-lingruby
 _pkgbase=linux-lucjan
 _major=5.6
-pkgver=5.6.14
+pkgver=5.6.15
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -127,7 +127,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll53'
+ _lucjanrev='ll56'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -455,14 +455,14 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('fe19ad3165ae46f1511e39c495ba1a5a304ea3f69a169debe27026e0c888a4766b1618c76aee2279ba6fb0316cb731fdcd8ad5f9ac8dc1d4058573bd5dc00cd0'
+sha512sums=('fb87f0857b242cda7137b8ef32431f14f48ab9349cbf964b06d07ccbb81d1d4683e33c2b629fb41edf6d0c32c412069397b85683654ee632a9539c764fd9e7a2'
             'SKIP'
             '7574bc008344fde984b5e09ae2ce2dfe22dc109e1d97e3f59985d99300017e9c9221342a8f7459592b54e1a4cc82a7469f8ad4dd6dbd2a434c23219af971aeff'
             'SKIP'
-            '2fdedb2b7a4e71c9b0bc5ad0efea7a14dbbfaf9c1e2c81c4e3acbffce9fc0e6ac3cbccd70f4739028a501d37c2bc2c372a305b2d4d23bd7147d9dfdab7e8074a'
+            '94ff35dd1566cfa5ede3261724e154a3c96a6082f6c3de9806802e05d46017eb1793ccc886ac36886aced40ce76fe60aa1caad98f593631352373ed6abface70'
             'SKIP'
             'e0afce0ee6210144b63b4519393913b8a1648e673deb708b46b915a53c010a98d747ce07fbdf3eba6c83a590c80cf78199f73bb346a7619c02841a4c7ac5201e'
-            '83b3103709b3a00b1d87a603c6cd96e78f2a363812d654da37b6b83f8af21e56fd34b63c0881b84e63d14b5d8177b189d949c0db763ce6c87b0d73ad8fecc193'
+            '2188910c759ab4b55db5d78ef5a96f0e0b7858d7d5b66f0ce9da3c8707fa75a370595ced264caa35b302c5b478126660b779fb2fb6b024a08b95abe0af71840c'
             '64f9f83c2ff110f9a4c11faa195313508d5cf8e99319351938c8408a5d6642997701796ad5ce05c319ba031b4b763b1bd4fad54762d64b9f6690b6d4080c2e85')
 
 validpgpkeys=(
