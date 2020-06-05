@@ -1,4 +1,4 @@
-diff --git i/Documentation/conf.py w/Documentation/conf.py
+diff --git i/Documentation/conf.py w/Documentation/conf.py 
 index 3c7bdf4cd31f..9a0ced58a3e9 100644
 --- i/Documentation/conf.py
 +++ w/Documentation/conf.py

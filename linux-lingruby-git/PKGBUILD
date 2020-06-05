@@ -73,14 +73,14 @@ _bfq_rev='stable'
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lingruby
 _pkgbase=linux-lucjan
-_major=5.6
-pkgver=5.6.15
+_major=5.7
+pkgver=5.7
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -127,7 +127,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll56'
+ _lucjanrev='ll7'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -135,7 +135,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll1'
+ _lucjanrev='ll7'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -144,7 +144,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll6'
+ _lucjanrev='ll7'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -455,14 +455,14 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('fb87f0857b242cda7137b8ef32431f14f48ab9349cbf964b06d07ccbb81d1d4683e33c2b629fb41edf6d0c32c412069397b85683654ee632a9539c764fd9e7a2'
+sha512sums=('45bde01593f6147c8c169b9e46b4b56eee998142552ae0ff82f1dd21b1fd54f3b32f6283f6bd77ea717d374672167849e468c157f235d2f12f7d7816e4623bf6'
             'SKIP'
-            '7574bc008344fde984b5e09ae2ce2dfe22dc109e1d97e3f59985d99300017e9c9221342a8f7459592b54e1a4cc82a7469f8ad4dd6dbd2a434c23219af971aeff'
+            '349a69c0b4ec02a437d3e7780dc2b1b85c09509b604e7ffb0c9c6964bf837d406d9bd2625e2d94112fc8c70f6ffef6183949af220d3be8bce5b69a9729854e31'
             'SKIP'
-            '94ff35dd1566cfa5ede3261724e154a3c96a6082f6c3de9806802e05d46017eb1793ccc886ac36886aced40ce76fe60aa1caad98f593631352373ed6abface70'
+            '80fa3bb492781956211e2d36895954e08913f63c6dc0592c8c2bc7c298bc3d09e05a197c321ae5d3f67c27ae1a1e3e57732459d3dd6f760fe1c47f13d3202ec8'
             'SKIP'
             'e0afce0ee6210144b63b4519393913b8a1648e673deb708b46b915a53c010a98d747ce07fbdf3eba6c83a590c80cf78199f73bb346a7619c02841a4c7ac5201e'
-            '2188910c759ab4b55db5d78ef5a96f0e0b7858d7d5b66f0ce9da3c8707fa75a370595ced264caa35b302c5b478126660b779fb2fb6b024a08b95abe0af71840c'
+            '0094af4be58379726a5ac4d178ef068395f26bdd1deee2a794d1c1d7935660831a89451c0556025a9f5018b2e70f6183a808400bf8a725223e0bed6b515918f3'
             '64f9f83c2ff110f9a4c11faa195313508d5cf8e99319351938c8408a5d6642997701796ad5ce05c319ba031b4b763b1bd4fad54762d64b9f6690b6d4080c2e85')
 
 validpgpkeys=(
