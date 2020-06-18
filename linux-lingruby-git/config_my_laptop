@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.7.2.ll9 Kernel Configuration
+# Linux/x86 5.7.3.ll14 Kernel Configuration
 #
 
 #
@@ -2717,6 +2717,7 @@ CONFIG_I2C_I801=m
 # CONFIG_I2C_ISMT is not set
 # CONFIG_I2C_PIIX4 is not set
 # CONFIG_I2C_CHT_WC is not set
+# CONFIG_I2C_NCT6775 is not set
 # CONFIG_I2C_NFORCE2 is not set
 # CONFIG_I2C_NVIDIA_GPU is not set
 # CONFIG_I2C_SIS5595 is not set
