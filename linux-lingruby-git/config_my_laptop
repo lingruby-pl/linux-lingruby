@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.7.6.ll23 Kernel Configuration
+# Linux/x86 5.7.7.ll34 Kernel Configuration
 #
 
 #
@@ -152,6 +152,7 @@ CONFIG_HAVE_UNSTABLE_SCHED_CLOCK=y
 #
 # Scheduler features
 #
+CONFIG_SCHED_ALT=y
 CONFIG_SCHED_BMQ=y
 # end of Scheduler features
 
