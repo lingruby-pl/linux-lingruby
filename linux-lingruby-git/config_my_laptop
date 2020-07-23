@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.7.8.ll45 Kernel Configuration
+# Linux/x86 5.7.10.ll51 Kernel Configuration
 #
 
 #
@@ -432,7 +432,7 @@ CONFIG_X86_THERMAL_VECTOR=y
 # Performance monitoring
 #
 CONFIG_PERF_EVENTS_INTEL_UNCORE=m
-CONFIG_PERF_EVENTS_INTEL_RAPL=m
+# CONFIG_PERF_EVENTS_INTEL_RAPL is not set
 CONFIG_PERF_EVENTS_INTEL_CSTATE=m
 # CONFIG_PERF_EVENTS_AMD_POWER is not set
 # end of Performance monitoring
@@ -4431,6 +4431,7 @@ CONFIG_SND_HDA_CODEC_HDMI=m
 # CONFIG_SND_HDA_CODEC_SI3054 is not set
 CONFIG_SND_HDA_GENERIC=m
 CONFIG_SND_HDA_POWER_SAVE_DEFAULT=0
+CONFIG_SND_HDA_INTEL_HDMI_SILENT_STREAM=y
 # end of HD-Audio
 
 CONFIG_SND_HDA_CORE=m
