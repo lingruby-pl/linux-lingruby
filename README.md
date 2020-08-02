@@ -37,7 +37,7 @@
 
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 10.1
 
-* [Project C](https://gitlab.com/alfredchen/linux-prjc/-/commits/linux-5.7.y-bmq) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
+* [Project C](https://gitlab.com/alfredchen/linux-prjc/tree/linux-5.7.y-prjc) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
 * [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.7/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
 
@@ -50,7 +50,6 @@
 * [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.7/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.7/ll-patches) - specific patches authored by Piotr Gorski
 
 * [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.7/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.7/ll-branding) - specific patches authored by Piotr Gorski
-
 
 ***
 
