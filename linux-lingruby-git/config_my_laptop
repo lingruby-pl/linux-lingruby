@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.8.5.ll10 Kernel Configuration
+# Linux/x86 5.8.6.ll12 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -34,10 +34,10 @@ CONFIG_HAVE_KERNEL_ZSTD=y
 # CONFIG_KERNEL_GZIP is not set
 # CONFIG_KERNEL_BZIP2 is not set
 # CONFIG_KERNEL_LZMA is not set
-CONFIG_KERNEL_XZ=y
+# CONFIG_KERNEL_XZ is not set
 # CONFIG_KERNEL_LZO is not set
 # CONFIG_KERNEL_LZ4 is not set
-# CONFIG_KERNEL_ZSTD is not set
+CONFIG_KERNEL_ZSTD=y
 CONFIG_DEFAULT_INIT=""
 CONFIG_DEFAULT_HOSTNAME="spectrwm"
 CONFIG_SWAP=y
@@ -5142,7 +5142,7 @@ CONFIG_VIRTIO_MENU=y
 # CONFIG_VIRTIO_PCI is not set
 # CONFIG_VIRTIO_PMEM is not set
 # CONFIG_VIRTIO_BALLOON is not set
-CONFIG_VIRTIO_MEM=m
+# CONFIG_VIRTIO_MEM is not set
 # CONFIG_VIRTIO_INPUT is not set
 # CONFIG_VIRTIO_MMIO is not set
 # CONFIG_VDPA is not set
