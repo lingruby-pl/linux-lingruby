@@ -80,7 +80,7 @@ _linux_lucjan='actual'
 pkgbase=linux-lingruby
 _pkgbase=linux-lucjan
 _major=5.8
-pkgver=5.8.8
+pkgver=5.8.9
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -127,7 +127,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll18'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -455,14 +455,14 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('cd716a3619b4d802c0c4ea1e73bf810f01047b504c6617d48eb5cee62c10685b8813b9c88687cb5f866538a402c98092581b413dce302d46c1c06d084080c87c'
+sha512sums=('d3a3a494a5ddc258d6e8eaf92eeb8957ca94ecc8657157c0647369772630848d3fb3633133fd184cc020a148b659d95a6e3d850d435c64ffa55e2f5156687220'
             'SKIP'
             '31a53157734564da378aad5dc084db43f34fe868c78cebf4c6625d255cf02765b6a7125b7a7a79841a28e8087a6ed01715507f0531a152220261a2b19e3c3d29'
             'SKIP'
-            '96b7227905012c6aa8a3bcf76d7c350d2ee2d5249179faf297733ba6a51c9194760fb80687bd1d71f67f6a296b21752de91d8e92eeb886dad8ae87e97094d8cc'
+            '35a93e467c38282a98e7ad7560edfbd91e5d9aa15f18fa31a509521df5860ba60608478b43ad2c398056b6858e7aac4a8d586ff22168836109616c1f79f72002'
             'SKIP'
             'e0afce0ee6210144b63b4519393913b8a1648e673deb708b46b915a53c010a98d747ce07fbdf3eba6c83a590c80cf78199f73bb346a7619c02841a4c7ac5201e'
-            '18db188d3444eb49b04b7476a0fa04c4d0d225399699d53e43a6125fe0e571837ff73df4d4f2e9454c67145dd2e4b738105d37c0ad34d4c0c2bf61a3a94966b1'
+            'f1438a5183285cb7df23894580f0545cbbc2de41f675468b5f48de5a8a8537cec90b075ddf75750a33154bea30cf86f1fc4788c3d01a81c3f29275d665c2d0c5'
             '64f9f83c2ff110f9a4c11faa195313508d5cf8e99319351938c8408a5d6642997701796ad5ce05c319ba031b4b763b1bd4fad54762d64b9f6690b6d4080c2e85')
 
 validpgpkeys=(
