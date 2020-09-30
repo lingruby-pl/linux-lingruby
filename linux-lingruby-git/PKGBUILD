@@ -158,6 +158,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
         # the main kernel config files
+        'linux.preset'
         'config')
 
 export KBUILD_BUILD_HOST=spectrwm
@@ -459,6 +460,7 @@ sha512sums=('c1daa20dcdaa2cb805e7a973b684ea40327088d8fadf0cf44f4c73284923363397b
             'SKIP'
             '53eec5d4041f4985637a2f9e3ea507429fe8220a595dd5bb8d6aa28df4b3054f14c60938425f7ae72138395708ca370bb764e91d278a38f893bef14b57ba29a7'
             'SKIP'
+            'f1b71233d65dedd8c2dde45e5a2050fe7a20e6e467df860fc8859325c93ead2e5f229511cfbc6cd830b844bef9c5dca87640051d30d8c218d4d697d8677aa3b4'
             '5066150921e89a69c4862984caed1e4d9289b4ce949355664b4b3233ffd683d156bac53d1d7f6cd5146e6e098074c0dd9521ec06bd2c1270ffbab4089007c90f')
 
 validpgpkeys=(
