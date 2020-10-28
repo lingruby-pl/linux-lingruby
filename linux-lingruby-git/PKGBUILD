@@ -73,14 +73,14 @@ _bfq_rev='stable'
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='trunk'
+_linux_lucjan='actual'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lingruby
 _pkgbase=linux-lucjan
 _major=5.9
-pkgver=5.9
+pkgver=5.9.1
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -127,7 +127,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll15'
+ _lucjanrev='ll25'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -207,78 +207,69 @@ prepare() {
 	fi
 
     ### Set GCC flags
-        if [ -n "$_gcc_haswell" ]; then
-                echo "Setting GCC flags for Intel Haswell CPU..."
-                sed -i -e s'/^CONFIG_GENERIC_CPU=y/# CONFIG_GENERIC_CPU is not set/' \
-                    -i -e s'/^# CONFIG_MHASWELL is not set/CONFIG_MHASWELL=y/' ./.config
-        fi
+	if [ -n "$_gcc_haswell" ]; then
+		echo "Setting GCC flags for Intel Haswell CPU..."
+		scripts/config --disable CONFIG_GENERIC_CPU
+		scripts/config --enable CONFIG_MHASWELL
+	fi
 
     ### Set performance governor
         if [ -n "$_per_gov" ]; then
-                echo "Setting performance governor..."
-                sed -i -e s'/^CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL=y/# CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL is not set/' \
-                    -i -e s'/^# CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE is not set/CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y/' ./.config
-                echo "Disabling uneeded governors..."
-                sed -i -e s'/^CONFIG_CPU_FREQ_GOV_ONDEMAND=m/# CONFIG_CPU_FREQ_GOV_ONDEMAND is not set/' \
-                    -i -e s'/^CONFIG_CPU_FREQ_GOV_CONSERVATIVE=m/# CONFIG_CPU_FREQ_GOV_CONSERVATIVE is not set/' \
-                    -i -e s'/^CONFIG_CPU_FREQ_GOV_USERSPACE=m/# CONFIG_CPU_FREQ_GOV_USERSPACE is not set/' \
-                    -i -e s'/^CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y/# CONFIG_CPU_FREQ_GOV_SCHEDUTIL is not set/' ./.config
+		echo "Setting performance governor..."
+		scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
+		scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
+		echo "Disabling uneeded governors..."
+		scripts/config --disable CONFIG_CPU_FREQ_GOV_ONDEMAND
+		scripts/config --disable CONFIG_CPU_FREQ_GOV_CONSERVATIVE
+		scripts/config --disable CONFIG_CPU_FREQ_GOV_USERSPACE
+		scripts/config --disable CONFIG_CPU_FREQ_GOV_SCHEDUTIL
         fi
 
     ### Disable Deadline I/O scheduler
 	if [ -n "$_deadline_disable" ]; then
 		echo "Disabling Deadline I/O scheduler..."
-		sed -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
+		scripts/config --disable CONFIG_MQ_IOSCHED_DEADLINE
 	fi
 
     ### Disable Kyber I/O scheduler
 	if [ -n "$_kyber_disable" ]; then
 		echo "Disabling Kyber I/O scheduler..."
-		sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
+		scripts/config --disable CONFIG_MQ_IOSCHED_KYBER
 	fi
 
     ### Enable KBUILD_CFLAGS -O3
 	if [ -n "$_cc_harder" ]; then
 		echo "Enabling KBUILD_CFLAGS -O3..."
-		sed -i -e s'/^CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y/# CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE is not set/' \
-                    -i -e s'/^# CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3 is not set/CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y/' ./.config
+		scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+		scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
         fi
 
     ### Optionally set tickrate to 1000
 	if [ -n "$_1k_HZ_ticks" ]; then
 		echo "Setting tick rate to 1k..."
-		sed -i -e 's/^CONFIG_HZ_300=y/# CONFIG_HZ_300 is not set/' \
-                    -i -e 's/^# CONFIG_HZ_1000 is not set/CONFIG_HZ_1000=y/' \
-                    -i -e 's/^CONFIG_HZ=300/CONFIG_HZ=1000/' ./.config
+		scripts/config --disable CONFIG_HZ_300
+		scripts/config --enable CONFIG_HZ_1000
+		scripts/config --set-val CONFIG_HZ 1000
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
         # (x86 kernels do not support NUMA)
-        if [ -n "$_NUMAdisable" ]; then
-            echo "Disabling NUMA from kernel config..."
-            sed -i -e 's/CONFIG_NUMA=y/# CONFIG_NUMA is not set/' \
-                -i -e '/CONFIG_AMD_NUMA=y/d' \
-                -i -e '/CONFIG_X86_64_ACPI_NUMA=y/d' \
-                -i -e '/CONFIG_NODES_SPAN_OTHER_NODES=y/d' \
-                -i -e '/# CONFIG_NUMA_EMU is not set/d' \
-                -i -e '/CONFIG_NODES_SHIFT=6/d' \
-                -i -e '/CONFIG_NEED_MULTIPLE_NODES=y/d' \
-                -i -e '/# CONFIG_MOVABLE_NODE is not set/d' \
-                -i -e '/CONFIG_USE_PERCPU_NUMA_NODE_ID=y/d' \
-                -i -e '/CONFIG_ACPI_NUMA=y/d' ./.config
-        fi
+	if [ -n "$_NUMAdisable" ]; then
+		echo "Disabling NUMA from kernel config..."
+		scripts/config --disable CONFIG_NUMA
+	fi
 
     ### Optionally load needed modules for the make localmodconfig
         # See https://aur.archlinux.org/packages/modprobed-db
-        if [ -n "$_localmodcfg" ]; then
-            if [ -f $HOME/.config/modprobed.db ]; then
-            echo "Running Steven Rostedt's make localmodconfig now"
-            make LSMOD=$HOME/.config/modprobed.db localmodconfig
-        else
-            echo "No modprobed.db data found"
-            exit
-            fi
-        fi
+	if [ -n "$_localmodcfg" ]; then
+		if [ -f $HOME/.config/modprobed.db ]; then
+		echo "Running Steven Rostedt's make localmodconfig now"
+		make LSMOD=$HOME/.config/modprobed.db localmodconfig
+	else
+		echo "No modprobed.db data found"
+		exit
+		fi
+	fi
 
     ### Enable WireGuard
   if [ "$_wireguard" = y ]; then
@@ -306,7 +297,7 @@ prepare() {
 
     ### Prepared version
         make -s kernelrelease > version
-        echo "Prepared %s version %s" "$pkgbase" "$(<version)"
+        echo "Prepared $pkgbase version $(<version)"
 
     ### Running make nconfig
 	[[ -z "$_makenconfig" ]] ||  make nconfig
@@ -454,14 +445,14 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('d3d92ce4246bad74c9a784212f160d98449b1e8793970c2c308276568d852b8effe0528686bdb87d55d691f09a826abf7938d69bdd4759ce65ddd5c05ffe4eca'
+sha512sums=('96af08c1dc964e5dbb3d221880ef8ca246f13370d2dc2f5ae64039f0352efc687c7446a2b4f86dad553b776ee75f78bbf58bb9bc845c9b57a9013ece63264874'
             'SKIP'
             '9f4051fb4f6920b751a69b8c0fdb14d25a993da945b831181f00749983fca520feff4382b69e571ee118439e2dc97369fa8534a0b704b535dc8c6cd2135c48ad'
             'SKIP'
-            'aabda3f8563798d76dfde088da9246d8566f2b04e937929decb82f833bd2eb1320a9620e77c72ea1fd68adf62c136f54a42c307aea01499d88e7b6b02a085341'
+            'f12bcd9f441cb13d81ad6d208d6ca8328c7fb1ab4861336e1a8adb3f428027013a5bcc7eda511d0af9a6efb6fb7dba0ad516ccc7dada22f577848ed4694603cc'
             'SKIP'
             'f1b71233d65dedd8c2dde45e5a2050fe7a20e6e467df860fc8859325c93ead2e5f229511cfbc6cd830b844bef9c5dca87640051d30d8c218d4d697d8677aa3b4'
-            'c5ddde0d90177ee1fc7fa07a8d300cc28453df3d0fab4f28177aac668717cfe917e8d9fc0a315f17145ffe29d7999f6e8568f0f653fb887114c95b5cdfa8161d')
+            '0b22d37744ce3a63320aedb1094eecdeb3796ae6e00019f429f466b061f69791d6ef74b19d9ebe973d974f1ada9b392e5e2d9e623783aafb85cde4d77cad76e5')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
