@@ -80,7 +80,7 @@ _linux_lucjan='actual'
 pkgbase=linux-lingruby
 _pkgbase=linux-lucjan
 _major=5.9
-pkgver=5.9.1
+pkgver=5.9.2
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -127,7 +127,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll25'
+ _lucjanrev='ll28'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -445,14 +445,14 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('96af08c1dc964e5dbb3d221880ef8ca246f13370d2dc2f5ae64039f0352efc687c7446a2b4f86dad553b776ee75f78bbf58bb9bc845c9b57a9013ece63264874'
+sha512sums=('98efc0d10e76685eb3280546d8d9b0251062a8ede05959d0de95df18414d2a07ced0a585ba58dd5aad188ad2761d7c5150cd8a8435a6bb53d692702f434732a9'
             'SKIP'
             '9f4051fb4f6920b751a69b8c0fdb14d25a993da945b831181f00749983fca520feff4382b69e571ee118439e2dc97369fa8534a0b704b535dc8c6cd2135c48ad'
             'SKIP'
-            'f12bcd9f441cb13d81ad6d208d6ca8328c7fb1ab4861336e1a8adb3f428027013a5bcc7eda511d0af9a6efb6fb7dba0ad516ccc7dada22f577848ed4694603cc'
+            'b345d1893cfd3ba75d6db745a85a2729989a252b06407bb34ea0cb93e117519766717533276297b08b8e17a409a5dda2b67f7b49cf96127fada7259208606e26'
             'SKIP'
             'f1b71233d65dedd8c2dde45e5a2050fe7a20e6e467df860fc8859325c93ead2e5f229511cfbc6cd830b844bef9c5dca87640051d30d8c218d4d697d8677aa3b4'
-            '0b22d37744ce3a63320aedb1094eecdeb3796ae6e00019f429f466b061f69791d6ef74b19d9ebe973d974f1ada9b392e5e2d9e623783aafb85cde4d77cad76e5')
+            '862f14096fa835179fee5a64f884abecabab7b1531045b143f8fe001cd458892b9f0a793bb2be9d837102a9fb99b506569066697939b65def9583501441f3aa5')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
