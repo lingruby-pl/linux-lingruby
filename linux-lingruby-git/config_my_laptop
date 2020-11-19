@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.9.8.ll37 Kernel Configuration
+# Linux/x86 5.9.9.ll46 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -5713,6 +5713,7 @@ CONFIG_FAT_DEFAULT_IOCHARSET="iso8859-1"
 CONFIG_FAT_DEFAULT_UTF8=y
 # CONFIG_EXFAT_FS is not set
 # CONFIG_NTFS_FS is not set
+# CONFIG_NTFS3_FS is not set
 # end of DOS/FAT/EXFAT/NT Filesystems
 
 #
@@ -6172,12 +6173,6 @@ CONFIG_BINARY_PRINTF=y
 #
 # Library routines
 #
-
-#
-# RAID 6
-#
-# end of RAID 6
-
 CONFIG_LINEAR_RANGES=y
 CONFIG_PACKING=y
 CONFIG_BITREVERSE=y
