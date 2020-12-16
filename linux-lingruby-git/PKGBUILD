@@ -73,15 +73,15 @@ _ll_rev='stable'
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lingruby
 _pkgbase=linux-lucjan
-_major=5.9
+_major=5.10
 _patches=${_major}-dev
-pkgver=5.9.14
+pkgver=5.10.1
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -103,7 +103,7 @@ if [ "$_ll_rev" = "stable" ]; then
 # _llrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_patches}/ll-reverts/stable"
  _llrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_patches}/ll-reverts/stable"
  _llrevname='ll-reverts'
- _llrevver='ver5'
+ _llrevver='ver1'
  _llrevpatch="${_major}-${_llrevname}-${_llrevver}.patch"
 
 elif [ "$_ll_rev" = "unstable" ]; then
@@ -129,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll72'
+ _lucjanrev='ll5'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -137,7 +137,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll15'
+ _lucjanrev='ll5'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -146,7 +146,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll15'
+ _lucjanrev='ll5'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -330,7 +330,7 @@ _package() {
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
-  provides=("${pkgbase}=${pkgver}" "linux=${pkgver}")
+  provides=("${pkgbase}=${pkgver}" "linux=${pkgver}" VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE)
   backup=("etc/mkinitcpio.d/${pkgbase}.preset")
 
   cd $_srcname
@@ -447,14 +447,14 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('719c32e811602cd3a9429c16c1c1e8684751dffd2fb052357376695a2654ec3f771e321e530ed178223dc581f36fbfa9be362941cf6fd74d2853b393ab357552'
+sha512sums=('5b6cc32f2daa1de35ceeb0007536d6e49776064370d94f8d77c19cefc97e88c47ff55cb4c6add7c49189e7203ff44a05ffacf3c0f4b766f719d6df1a110f95bb'
             'SKIP'
-            '0e57ffe7f1a990c7934e74b3d57c60c10f35994c07a3a5b19d95c1d79c3ece989c3446dc6a6b4616f9bb5bf8a3450fb4c6a4b30bbf572aef905039391dd8dd65'
+            'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
-            '935e75957c256686e3822dc2ad9a0b6e597bee4f521edbf2e2b6c05e57f70833c705027b6c3391dea93ca74dbef2580be62273b92d92cce73195ba1b833dff73'
+            'a739cdd157298a85253d9ef4ed3e6be255d6ce91ff01d89a897cc639be977b4f55dfa46aa34f65146e669d68f9cace2e0df729a75b568991bfe226320a10549e'
             'SKIP'
             'f1b71233d65dedd8c2dde45e5a2050fe7a20e6e467df860fc8859325c93ead2e5f229511cfbc6cd830b844bef9c5dca87640051d30d8c218d4d697d8677aa3b4'
-            '4355df3ee2fbaea17ccd6684e6563565f61930509ee7dcddead0a07d4ed438bcc6ae5a72121ca9acffba52ed117b3a5ad82d28074a4edfd9ffdea023d69c1365')
+            'ff21dba2ecb95bd5bf4115019e47062c5eb4e56010e566fccb3ccdacda2c8d28f1302729391f5fda9876b65cb299ab54f890cdc7932d6fdaffa99983b796fb2b')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
