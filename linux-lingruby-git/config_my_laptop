@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.10.3.ll26 Kernel Configuration
+# Linux/x86 5.10.4.ll29 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -3349,7 +3349,6 @@ CONFIG_MFD_RC5T583=y
 # CONFIG_MFD_RN5T618 is not set
 CONFIG_MFD_SEC_CORE=y
 # CONFIG_MFD_SI476X_CORE is not set
-# CONFIG_MFD_SL28CPLD is not set
 # CONFIG_MFD_SM501 is not set
 # CONFIG_MFD_SKY81452 is not set
 CONFIG_ABX500_CORE=y
@@ -5707,6 +5706,7 @@ CONFIG_FS_MBCACHE=m
 # CONFIG_NILFS2_FS is not set
 # CONFIG_F2FS_FS is not set
 # CONFIG_ZONEFS_FS is not set
+# CONFIG_SPADFS_FS is not set
 CONFIG_FS_DAX=y
 CONFIG_FS_DAX_PMD=y
 CONFIG_FS_POSIX_ACL=y
