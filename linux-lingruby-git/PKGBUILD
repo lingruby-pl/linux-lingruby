@@ -80,8 +80,10 @@ _mm_protect=y
 # Possible compilation and installation errors.
 # Leave it unselected.
 # However, if you want to test the new solution,
-# first install mkinitcpio-zstd and kmod-zstd
-# https://gitlab.com/sirlucjan/lucjan-kernels/-/tree/master/depends
+# first install mkinitcpio-zstd and kmod-zstd:
+# https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
+# or
+# https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
 _zstd_modules=y
 
 ### WireGuard: y=enable full built-in, n=disable entirely, empty=with no changes in config
@@ -106,14 +108,14 @@ pkgbase=linux-lingruby
 _pkgbase=linux-lucjan
 _major=5.10
 _patches=${_major}-dev
-pkgver=5.10.4
+_srcname=linux
+pkgver=5.10.5
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://github.com/lingruby-pl/linux-lingruby"
 license=('GPL2')
 options=('!strip')
-_srcname="linux-${pkgver}"
 makedepends=('kmod' 'bc' 'libelf' 'git' 'imagemagick')
 if [ -n "$_zstd_modules" ]; then
     depends+=('kmod-zstd' 'mkinitcpio-zstd')
@@ -157,7 +159,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll29'
+ _lucjanrev='ll39'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -181,14 +183,12 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 
-source=("https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
-        "https://cdn.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.sign"
+source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/${_srcname}.git#branch=linux-${_major}.y"
         # ll-reverts
-       "${_llrevpath}/${_llrevpatch}"{,.sig}
+        "${_llrevpath}/${_llrevpatch}"{,.sig}
         # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
         # the main kernel config files
-        'linux.preset'
         'config')
 
 export KBUILD_BUILD_HOST=spectrwm
@@ -311,7 +311,7 @@ prepare() {
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
-    # (x86 kernels do not support NUMA)
+        # (x86 kernels do not support NUMA)
 	if [ -n "$_NUMAdisable" ]; then
 		echo "Disabling NUMA from kernel config..."
 		scripts/config --disable CONFIG_NUMA
@@ -325,7 +325,7 @@ prepare() {
 	fi
 
     ### Optionally load needed modules for the make localmodconfig
-    # See https://aur.archlinux.org/packages/modprobed-db
+        # See https://aur.archlinux.org/packages/modprobed-db
 	if [ -n "$_localmodcfg" ]; then
 		if [ -f $HOME/.config/modprobed.db ]; then
 		echo "Running Steven Rostedt's make localmodconfig now"
@@ -394,7 +394,6 @@ _package() {
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
   provides=("${pkgbase}=${pkgver}" "linux=${pkgver}" VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE)
-  backup=("etc/mkinitcpio.d/${pkgbase}.preset")
 
   cd $_srcname
   local kernver="$(<version)"
@@ -409,20 +408,10 @@ _package() {
   echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
 
   echo "Installing modules..."
-  make INSTALL_MOD_PATH="$pkgdir/usr" modules_install
+  make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
 
   # remove build and source links
   rm "$modulesdir"/{source,build}
-
-  # installing preset
-  echo "Installing preset..."
-  # sed expression for following substitutions
-  local subst="s|%PKGBASE%|$pkgbase|g"
-  # fill in mkinitcpio preset
-  sed "$subst" ../linux.preset | install -Dm644 /dev/stdin "$pkgdir/etc/mkinitcpio.d/$pkgbase.preset"
-
-  echo "Fixing permissions..."
-  chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
 _package-headers() {
@@ -494,13 +483,15 @@ _package-headers() {
     esac
   done < <(find "$builddir" -type f -perm -u+x ! -name vmlinux -print0)
 
+  echo "Stripping vmlinux..."
+  strip -v $STRIP_STATIC "$builddir/vmlinux"
+
   echo "Adding symlink..."
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
-
-  echo "Fixing permissions..."
-  chmod -Rc u=rwX,go=rX "$pkgdir"
 }
+
+
 
 pkgname=("$pkgbase" "$pkgbase-headers")
 for _p in "${pkgname[@]}"; do
@@ -510,14 +501,12 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('aab782786cc06b5f1872bbb88c4f55a73d222f8ecf1ab8f5b7d96de2160b11b4407e02a44b206d2c00e395ba0662aa5a038b8e10d185621a0b33c576b523b490'
-            'SKIP'
+sha512sums=('SKIP'
             'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
-            'bd582e0ae5c53c23bae23172aaa534af5e4e61f3fea48db716b6ee8b1f49046ad68814bd8e431ead344c8160aa65756fcb2818724708afec4df932795d724b9c'
+            '0bf811f2361a1dbb9be3312a9bee39e9d57a4b0b23212c7bc0dacb2a7172cd0de9bdd1532e5d3b96024b897db66274c124f226b4c1ff026786f78e9b5d38e4e1'
             'SKIP'
-            'd60f8cd3dcad9271691067b49a612b7404f81745970ae9ffffc025699167072462cc700e3729d00b4d3b3da154d0886bb669e62aef30c1396558e4acf3096940'
-            '592916f3b19770bd3a47dabaa0440914dd0d9d5a51b1ce8921418e0e45eebe6a81b8a61adac6172610d8b4aa3ffa81dbc646551a4fd90ecd6c82e7024c8a18ac')
+            'e5d00a4700fa6b168663ca0b37b9f8e8c88ea4c67758bb13e5d88358ccdf16bfe5382f1c293cfea96a9e6b9deb2c58a49be7334eeb240e76ae0636adcb803394')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
