@@ -80,7 +80,7 @@ _mm_protect=y
 # Possible compilation and installation errors.
 # Leave it unselected.
 # However, if you want to test the new solution,
-# first install mkinitcpio-zstd and kmod-zstd:
+# first install mkinitcpio-zstd:
 # https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
 # or
 # https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
@@ -109,7 +109,7 @@ _pkgbase=linux-lucjan
 _major=5.10
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.10.6
+pkgver=5.10.8
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -118,7 +118,7 @@ license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'bc' 'libelf' 'git' 'imagemagick')
 if [ -n "$_zstd_modules" ]; then
-    depends+=('kmod-zstd' 'mkinitcpio-zstd')
+    depends+=('initramfs-zstd')
 fi
 
 ### LL reverts
@@ -159,7 +159,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll40'
+ _lucjanrev='ll54'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -181,7 +181,6 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
-
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/${_srcname}.git#branch=linux-${_major}.y"
         # ll-reverts
@@ -392,7 +391,8 @@ _package() {
   depends=('coreutils' 'kmod' 'initramfs')
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
-              'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
+              'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig'
+              'initramfs-zstd: install modules compressed in ZSTD format - read the information above in PKGBUILD')
   provides=("${pkgbase}=${pkgver}" "linux=${pkgver}" VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE)
 
   cd $_srcname
@@ -504,9 +504,9 @@ done
 sha512sums=('SKIP'
             'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
-            'c0d60f521920539410c6fa1467c21f032292884058b3fdf89336eb2970135a689381e6096a726ce7307a59afdb7882795b62bc94118370f4e54e67bc759dc499'
+            '6ab36a2b405218dc6179da901cc6b5829fac292b1e3513f8ba45155dbde11941098ea7a0205f555bca8fc823d4ef92fad847be056c1e8708d705d44063dd084c'
             'SKIP'
-            'e5d00a4700fa6b168663ca0b37b9f8e8c88ea4c67758bb13e5d88358ccdf16bfe5382f1c293cfea96a9e6b9deb2c58a49be7334eeb240e76ae0636adcb803394')
+            '5700c03814164238d8707a748e00b565c9c2641fb39662e493862d6205649ffbe949ce755f839dff82c5c5930f4cc5bd77d7bc35167ef7be449d53ccf77d4d5e')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
