@@ -9,7 +9,7 @@
 ######            Mobo: Acer model: EA50_HB v: V1.32 serial: NBV9M11001448425A13400 UEFI: Insyde v: 1.32 
 ######            date: 09/15/2015 
 ###### CPU:       
-######            Topology: Dual Core model:  Core i3-4005U bits: 64 type: MT MCP arch: Haswell rev: 1 
+######            Topology: Dual Core model: Intel Core i3-4005U bits: 64 type: MT MCP arch: Haswell rev: 1 
 ######            L1 cache: 64 KiB L2 cache: 3072 KiB L3 cache: 3072 KiB 
 ######            flags: lm nx pae sse sse2 sse3 sse4_1 sse4_2 ssse3 vmx bogomips: 13568 
 ######            Speed: 1696 MHz min/max: 800/1700 MHz Core speeds (MHz): 1: 1696 2: 1696 3: 1696 4: 1696
