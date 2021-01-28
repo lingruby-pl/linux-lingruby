@@ -31,7 +31,7 @@ pkgbase = linux-lingruby
 	sha512sums = 6dce9ba113537febf6afedd1a47fbf76a071a7a708b6a019d5c15c27de8af3daff6c26ba15099554d8f3e7beffc856ed299b832fd3e42d9d264501607672341d
 
 pkgname = linux-lingruby
-	pkgdesc = The Linux LL kernel and modules with the lucjan-ll67 patchset. Fourth Gen Intel Core i3/i5/i7 optimized.
+	pkgdesc = The Linux LL kernel and modules with the lucjan-ll67 patchset. Fourth Gen  Core i3/i5/i7 optimized.
 	depends = coreutils
 	depends = kmod
 	depends = initramfs
@@ -45,7 +45,7 @@ pkgname = linux-lingruby
 	provides = WIREGUARD-MODULE
 
 pkgname = linux-lingruby-headers
-	pkgdesc = Headers and scripts for building modules for the Linux LL kernel. Fourth Gen Intel Core i3/i5/i7 optimized.
+	pkgdesc = Headers and scripts for building modules for the Linux LL kernel. Fourth Gen  Core i3/i5/i7 optimized.
 	depends = linux-lingruby=5.10.11
 	provides = linux-lingruby-headers=5.10.11
 	provides = linux-headers=5.10.11

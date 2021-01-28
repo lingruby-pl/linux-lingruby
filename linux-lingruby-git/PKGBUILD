@@ -246,7 +246,7 @@ prepare() {
 
     ### Set GCC flags
 	if [ -n "$_gcc_haswell" ]; then
-		echo "Setting GCC flags for Intel Haswell CPU..."
+		echo "Setting GCC flags for  Haswell CPU..."
 		scripts/config --disable CONFIG_GENERIC_CPU
 		scripts/config --enable CONFIG_MHASWELL
 	fi
@@ -387,7 +387,7 @@ build() {
 }
 
 _package() {
-  pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Fourth Gen Intel Core i3/i5/i7 optimized."
+  pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Fourth Gen  Core i3/i5/i7 optimized."
   depends=('coreutils' 'kmod' 'initramfs')
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
@@ -415,7 +415,7 @@ _package() {
 }
 
 _package-headers() {
-  pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
+  pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel. Fourth Gen  Core i3/i5/i7 optimized."
   provides=("${pkgbase}-headers=${pkgver}" "linux-headers=${pkgver}")
   depends=("${pkgbase}=${pkgver}")
 
