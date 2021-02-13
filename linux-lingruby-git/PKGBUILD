@@ -109,7 +109,7 @@ _pkgbase=linux-lucjan
 _major=5.10
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.10.15
+pkgver=5.10.16.ll82
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -506,7 +506,7 @@ sha512sums=('SKIP'
             'SKIP'
             'e597ec13785476755eeebbfcdf46ce6a964572f456cb2a272fce25e0dd18ff53847cd396cd83779fad27ff14428dc46fdee8a87fe5513e2469d496b89ad63b1a'
             'SKIP'
-            'aa543e32ddd8df4531b1841ab8012563f553802099d1b46a5286df9c2421a47ea94e0af519241aae0c6979fc15e5e7f3e2ab13cef99290c91facf0e366c31d99')
+            'efe78a3489a441eac385ca1991fe3c2e0a6e3cdefbf13e8dcdd0063b9b720d443c1ed6a9a72068cffef75ba0df7d7d312017fac8a9d97746f42f14edbc7bd2a8')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
