@@ -100,16 +100,16 @@ _ll_rev='stable'
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lingruby
 _pkgbase=linux-lucjan
-_major=5.10
+_major=5.11
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.10.16.ll82
+pkgver=5.11.0.ll9
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -159,7 +159,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
 #_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll82'
+ _lucjanrev='ll9'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -167,7 +167,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll73'
+ _lucjanrev='ll9'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -176,7 +176,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll9'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -304,9 +304,9 @@ prepare() {
     ### Enable protect file mappings under memory pressure
 	if [ -n "$_mm_protect" ]; then
 		echo "Enabling protect file mappings under memory pressure..."
-		scripts/config --enable CONFIG_UNEVICTABLE_ACTIVEFILE
-		scripts/config --set-val CONFIG_UNEVICTABLE_ACTIVEFILE_KBYTES_LOW 524288
-		scripts/config --set-val CONFIG_UNEVICTABLE_ACTIVEFILE_KBYTES_MIN 262144
+		scripts/config --enable CONFIG_UNEVICTABLE_FILE
+		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
+		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
@@ -502,11 +502,11 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
+            'da15889d0ef6765242305ba586f7699983f8d35d677581e8c287d576880e00ae457609f69733b4c241750659ba5851313fae1491e31ad9d5215ab5a2bc92483f'
             'SKIP'
-            'e597ec13785476755eeebbfcdf46ce6a964572f456cb2a272fce25e0dd18ff53847cd396cd83779fad27ff14428dc46fdee8a87fe5513e2469d496b89ad63b1a'
+            'd5959844cb32469c81262936eac93177f8e432fc7ea4c97907d4fe1ef8a8f34b772a70bae319a73fadf99c9e64e6a3db1237b0caff8ef8f80b64ae4d11d3fb4a'
             'SKIP'
-            'efe78a3489a441eac385ca1991fe3c2e0a6e3cdefbf13e8dcdd0063b9b720d443c1ed6a9a72068cffef75ba0df7d7d312017fac8a9d97746f42f14edbc7bd2a8')
+            '54e84009d5ca5c7dc1c52be7608ccfeb3772e0463770e92d33ca719bcc67713658f700e19f87777a3c48954b639d3a9f0055422b35f3ee81401b71bdf2e94e54')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
