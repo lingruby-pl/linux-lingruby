@@ -109,7 +109,7 @@ _pkgbase=linux-lucjan
 _major=5.11
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.11.1.ll16
+pkgver=5.11.1.ll19
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -159,7 +159,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
 #_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -167,7 +167,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll19'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -176,7 +176,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
  _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
 # _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll19'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -504,9 +504,9 @@ done
 sha512sums=('SKIP'
             'da15889d0ef6765242305ba586f7699983f8d35d677581e8c287d576880e00ae457609f69733b4c241750659ba5851313fae1491e31ad9d5215ab5a2bc92483f'
             'SKIP'
-            'b4b07b2579829d1e81ead9878b1722decb4a99a6c835c86c6c789ffba6f684c0bf54c72a07bfdcb7cb1fe864980fa1e8d1e430607fe8e6786420cedbf26dde17'
+            '3349959ce784d62db0bd206cdc38112e5fd5bd18ed910541fb488519314f7166f0e0ca43a94692a2786111ca020fb4909e0cdcf17e35a75b4c2296d2523011e7'
             'SKIP'
-            '8ad2b81b0a3fb781edef69d4b1421336bf108dd15219732a1add9bedea64502f186aad92bb5863ef60820f74c3808f2fedb4778db52b66cf88bb789d7c22b663')
+            '43c249f772dc0a16b3423123053aa80e83ddf28f63a7edf0e866ca392b2d80a51dd69c8f21bcd97ca596a60128f4bc44eb92bc0ddacff6becd46a3385081bd6a')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
